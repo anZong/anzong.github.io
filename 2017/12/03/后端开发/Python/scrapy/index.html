@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<meta name="baidu-site-verification" content="code-uCHSRwBbel" />
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="L2scULXcrV-dpNTExouLzY5ZxJMduUhkMwEesmowcyU" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="宗安的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="官方文档 Spiders通用爬虫(Generic Spider)Scrapy内置了一些通用的爬虫基类，你可以通过继承这些基类来快速构建自己的爬虫。这些内置爬虫基类提供了许多常用功能，比如：通过指定的规则，sitemaps或者xml/csv格式的feed文件爬取网站的链接。接下来的例子，假定你已经创建了scrapy项目，在items.py中申明TestItem类：12345import scrapy">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy">
+<meta property="og:url" content="https://anzong.github.io/2017/12/03/后端开发/Python/scrapy/index.html">
+<meta property="og:site_name" content="宗安的博客">
+<meta property="og:description" content="官方文档 Spiders通用爬虫(Generic Spider)Scrapy内置了一些通用的爬虫基类，你可以通过继承这些基类来快速构建自己的爬虫。这些内置爬虫基类提供了许多常用功能，比如：通过指定的规则，sitemaps或者xml/csv格式的feed文件爬取网站的链接。接下来的例子，假定你已经创建了scrapy项目，在items.py中申明TestItem类：12345import scrapy">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-06T13:19:38.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy">
+<meta name="twitter:description" content="官方文档 Spiders通用爬虫(Generic Spider)Scrapy内置了一些通用的爬虫基类，你可以通过继承这些基类来快速构建自己的爬虫。这些内置爬虫基类提供了许多常用功能，比如：通过指定的规则，sitemaps或者xml/csv格式的feed文件爬取网站的链接。接下来的例子，假定你已经创建了scrapy项目，在items.py中申明TestItem类：12345import scrapy">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://anzong.github.io/2017/12/03/后端开发/Python/scrapy/"/>
+
+
+
+
+
+  <title>Scrapy | 宗安的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宗安的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">千里之行，始于足下</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anzong.github.io/2017/12/03/后端开发/Python/scrapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zong An">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宗安的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Scrapy</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T00:00:00+08:00">
+                2017-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">后端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-heartbeat"></i>页面访问量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  9.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  42
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://docs.scrapy.org/en/latest/" target="_blank" rel="noopener">官方文档</a></p>
+<h1 id="Spiders"><a href="#Spiders" class="headerlink" title="Spiders"></a>Spiders</h1><h2 id="通用爬虫-Generic-Spider"><a href="#通用爬虫-Generic-Spider" class="headerlink" title="通用爬虫(Generic Spider)"></a>通用爬虫(Generic Spider)</h2><p>Scrapy内置了一些通用的爬虫基类，你可以通过继承这些基类来快速构建自己的爬虫。这些内置爬虫基类提供了许多常用功能，比如：通过指定的规则，sitemaps或者xml/csv格式的feed文件爬取网站的链接。<br>接下来的例子，假定你已经创建了scrapy项目，在items.py<br>中申明TestItem类：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    id = scrapy.Field()</span><br><span class="line">    name = scrapy.Field()</span><br><span class="line">    description = scrapy.Field()</span><br></pre></td></tr></table></figure></p>
+<h3 id="CrawlSpider"><a href="#CrawlSpider" class="headerlink" title="CrawlSpider"></a>CrawlSpider</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">spiders</span>.<span class="title">CrawlSpider</span></span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这是爬取正规网站最常用的爬虫，它通过一系列的规则为跟踪网站链接提供方便的机制。对于特殊的网站或项目它或许不是最适合的，但对于常用的网站足矣。对于特殊的功能，你可以继承它，然后重载自定义部分即可，或者用它来实现你自己的爬虫。<br>与从spider继承的属性（需要指定）不同的是，该类支持一个特殊的属性：</p>
+<blockquote>
+<p>rules     </p>
+</blockquote>
+<p>Rule对象的一个或多个列表，每个Rule为爬取网站定义了明确的行为。Rules Objects将在后面的部分进行介绍。如果多个Rule匹配了同一个链接，只有第一个匹配生效，取决于它们在改属性中的顺序。</p>
+<p>CrawlSpider还暴露了一个可重写的方法：</p>
+<blockquote>
+<p>parse_start_url(response)</p>
+</blockquote>
+<pre><code>这个方法将被start_urls的响应调用，它允许解析初始的responses,必须返回一个Item对象或一个Request对象，或者一个包含这2个对象的可迭代类型。
+</code></pre><h4 id="Crawling-rules"><a href="#Crawling-rules" class="headerlink" title="Crawling rules"></a>Crawling rules</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">spiders</span>.<span class="title">Rule</span><span class="params">(link_extractor,callback=None,cb_kwargs=None,follow=None,process_links=None,process_request=None)</span></span></span><br></pre></td></tr></table></figure>
+<p>link_extractor是一个<a href="https://docs.scrapy.org/en/latest/topics/link-extractors.html#topics-link-extractors" target="_blank" rel="noopener">Link Extractor</a>对象，用于提取爬取到的页面中的链接。<br>callback每个提取到的链接调用的函数或字符串，这个callback的第一个参数是链接的response，必须返回一个Item或Request对象。</p>
+<blockquote>
+<p>注意：不能将parse作为callback，因为CrawlSpider使用parse作为它处理逻辑的默认方法，如果重写,crawl spider讲不能正常工作。</p>
+</blockquote>
+<p>cb_kwargscallback的参数<br>follow布尔类型，控制是否爬取页面中提取到的链接。如果没有callback，follow的默认值为True,否则默认False<br>process_links功能类似callback，主要用于过滤<br>process_request 被匹配本条Rule的request调用，必须返回一个request或者None</p>
+<h4 id="CrawlSpider例子"><a href="#CrawlSpider例子" class="headerlink" title="CrawlSpider例子"></a>CrawlSpider例子</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</span><br><span class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CrawlSpider)</span>:</span></span><br><span class="line">    name = <span class="string">'example.com'</span></span><br><span class="line">    allowed_domains = [<span class="string">'example.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'http://www.example.com'</span>]</span><br><span class="line"></span><br><span class="line">    rules = (</span><br><span class="line">        <span class="comment"># Extract links matching 'category.php' (but not matching 'subsection.php')</span></span><br><span class="line">        <span class="comment"># and follow links from them (since no callback means follow=True by default).</span></span><br><span class="line">        Rule(LinkExtractor(allow=(<span class="string">'category\.php'</span>, ), deny=(<span class="string">'subsection\.php'</span>, ))),</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Extract links matching 'item.php' and parse them with the spider's method parse_item</span></span><br><span class="line">        Rule(LinkExtractor(allow=(<span class="string">'item\.php'</span>, )), callback=<span class="string">'parse_item'</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        self.logger.info(<span class="string">'Hi, this is an item page! %s'</span>, response.url)</span><br><span class="line">        item = scrapy.Item()</span><br><span class="line">        item[<span class="string">'id'</span>] = response.xpath(<span class="string">'//td[@id="item_id"]/text()'</span>).re(<span class="string">r'ID: (\d+)'</span>)</span><br><span class="line">        item[<span class="string">'name'</span>] = response.xpath(<span class="string">'//td[@id="item_name"]/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'description'</span>] = response.xpath(<span class="string">'//td[@id="item_description"]/text()'</span>).extract()</span><br><span class="line">        <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure>
+<p>这个爬虫将爬取example.com的首页，收集category和item页面的链接，item页面的链接使用parse_item方法解析，每个response将使用xpath提取数据，并返回一个Item对象。</p>
+<h3 id="XMLFeedSpider"><a href="#XMLFeedSpider" class="headerlink" title="XMLFeedSpider"></a>XMLFeedSpider</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">spiders</span>.<span class="title">XMLFeedSpider</span></span></span><br></pre></td></tr></table></figure>
+<p>XMLFeedSpider被设计用来通过迭代指定的节点解析xml格式的订阅内容。解析器可选：iternodes,xml和html。出于性能考虑，推荐使用iternodes，因为xml和html为了解析一次性生成了整个DOM。然而，当解析的XML标记有问题时，使用html作为解析器是不错的选择。<br>通过设置以下类属性来设置解析器和标签名：<br>iterator 字符串，定义解析器。</p>
+<ul>
+<li>‘iternodes’ 基于正则表达式的快速解析器,默认。</li>
+<li>‘html’ 使用Selector的解析器，将所有Dom加载进内存，然后通过Dom解析。</li>
+<li>‘xml’ 同html</li>
+</ul>
+<p>itertag 定义解析的节点<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itertag = <span class="string">'product'</span></span><br></pre></td></tr></table></figure></p>
+<p>namespaces<br>包含(prefix,uri)的列表，prefix和uri将会通过调用register_namespace()方法注册。<br>然后，你就可以在itertag中通过命名空间指定节点.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Spider</span><span class="params">(XMLFeedSpider)</span>:</span></span><br><span class="line">    namespaces = [(<span class="string">'n'</span>, <span class="string">'http://www.sitemaps.org/schemas/sitemap/0.9'</span>)]</span><br><span class="line">    itertag = <span class="string">'n:url'</span></span><br></pre></td></tr></table></figure></p>
+<p>可重写的方法：</p>
+<blockquote>
+<p>adapt_response(response)<br>在response到达spider中间件后，spider解析前，对response body进行修改,返回一个新的reponse或者原来的response</p>
+<p>parse_node(response, selector)<br>被itertag匹配的nodes调用，接收node的response和Selector,这个方法是必须重写的，否则，spider将不能正常工作。<br>返回一个Item对象或Request对象，或者包含它们的可迭代内容。</p>
+<p>process_results(response, results)<br>被spider返回的结果调用，用于处理返回至框架核心前的最后一次请求，比如：设置item的ID。它接收一个结果的列表和生成这些结果的response。它必须返回一个结果的列表。</p>
+</blockquote>
+<h4 id="XMLFeedSpider-例子："><a href="#XMLFeedSpider-例子：" class="headerlink" title="XMLFeedSpider 例子："></a>XMLFeedSpider 例子：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> XMLFeedSpider</span><br><span class="line"><span class="keyword">from</span> myproject.items <span class="keyword">import</span> TestItem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(XMLFeedSpider)</span>:</span></span><br><span class="line">    name = <span class="string">'example.com'</span></span><br><span class="line">    allowed_domains = [<span class="string">'example.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'http://www.example.com/feed.xml'</span>]</span><br><span class="line">    iterator = <span class="string">'iternodes'</span>  <span class="comment"># This is actually unnecessary, since it's the default value</span></span><br><span class="line">    itertag = <span class="string">'item'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_node</span><span class="params">(self, response, node)</span>:</span></span><br><span class="line">        self.logger.info(<span class="string">'Hi, this is a &lt;%s&gt; node!: %s'</span>, self.itertag, <span class="string">''</span>.join(node.extract()))</span><br><span class="line"></span><br><span class="line">        item = TestItem()</span><br><span class="line">        item[<span class="string">'id'</span>] = node.xpath(<span class="string">'@id'</span>).extract()</span><br><span class="line">        item[<span class="string">'name'</span>] = node.xpath(<span class="string">'name'</span>).extract()</span><br><span class="line">        item[<span class="string">'description'</span>] = node.xpath(<span class="string">'description'</span>).extract()</span><br></pre></td></tr></table></figure>
+<p>spider下载start_urls中给定的feed文档，然后通过itertag标签迭代节点item，输出并存储随机数据到Item中。</p>
+<h3 id="CSVFeedSpider"><a href="#CSVFeedSpider" class="headerlink" title="CSVFeedSpider"></a>CSVFeedSpider</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">spiders</span>.<span class="title">CSVFeedSpider</span></span></span><br></pre></td></tr></table></figure>
+<p>CSVFeedSpider和XMLFeedSpider很像，除了迭代的对象是rows而不是nodes。每个迭代过程中调用parse_row()。</p>
+<blockquote>
+<p>delimiter      </p>
+</blockquote>
+<p>每个字段的分隔符，在CSV文件中默认是’,’</p>
+<blockquote>
+<p>quotechar</p>
+</blockquote>
+<p>包含每个字段的符号，在CSV中默认是’”‘</p>
+<blockquote>
+<p>headers</p>
+</blockquote>
+<p>CSV文件的列名，一个列表[]</p>
+<blockquote>
+<p>parse_row(response,row)</p>
+</blockquote>
+<p>接收一个reponse参数和一个字典(代表每一行，键是csv文件的列名)。</p>
+<p>CSVFeedSpider也可重写adapt_response 和 process_results方法。</p>
+<p>实例:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CSVFeedSpider</span><br><span class="line"><span class="keyword">from</span> myproject.items <span class="keyword">import</span> TestItem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CSVFeedSpider)</span>:</span></span><br><span class="line">    name = <span class="string">'example.com'</span></span><br><span class="line">    allowed_domains = [<span class="string">'example.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'http://www.example.com/feed.csv'</span>]</span><br><span class="line">    delimiter = <span class="string">';'</span></span><br><span class="line">    quotechar = <span class="string">"'"</span></span><br><span class="line">    headers = [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'description'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_row</span><span class="params">(self, response, row)</span>:</span></span><br><span class="line">        self.logger.info(<span class="string">'Hi, this is a row!: %r'</span>, row)</span><br><span class="line"></span><br><span class="line">        item = TestItem()</span><br><span class="line">        item[<span class="string">'id'</span>] = row[<span class="string">'id'</span>]</span><br><span class="line">        item[<span class="string">'name'</span>] = row[<span class="string">'name'</span>]</span><br><span class="line">        item[<span class="string">'description'</span>] = row[<span class="string">'description'</span>]</span><br><span class="line">        <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure></p>
+<h3 id="SitemapSpider"><a href="#SitemapSpider" class="headerlink" title="SitemapSpider"></a>SitemapSpider</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">spiders</span>.<span class="title">SitemapSpider</span></span></span><br></pre></td></tr></table></figure>
+<p>SitemapSpider允许你根据网站的sitemaps进行爬取内容。它支持嵌套的sitemaps和从robots.txt文件中发现sitemap。</p>
+<blockquote>
+<p>sitemap_urls  </p>
+</blockquote>
+<p> 一个指向sitemaps的列表，包含了爬虫将要爬取得urls，也可指向robots.txt文件，它将从中提取出sitemap的urls</p>
+<blockquote>
+<p>sitemap_rules</p>
+</blockquote>
+<p>一个(regex,callback)的列表：<br>regex: 从sitemaps中匹配urls的正则表达式，regex可以是字符串或编译的正则表达式对象。<br>callback：字符串或可调用的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sitemap_rules = [(&apos;/product/&apos;, &apos;parse_product&apos;)]</span><br></pre></td></tr></table></figure>
+<p>规则按顺序匹配，选择匹配到的第一个。如果省略该属性，sitemap_urls中的所有urls将被parse处理。</p>
+<blockquote>
+<p>sitemap_follow</p>
+</blockquote>
+<p>需要被跟踪的sitemap的正则表达式列表。仅对使用sitemap文件指向其他sitemap文件的站点有效。<br>默认的所有站点将被followed。</p>
+<blockquote>
+<p>sitemap_alternate_links</p>
+</blockquote>
+<p>指定 alternate links是否应该被followed。alternate links是指向同一网站的不同语言链接,使用的同一个url标记。<br>如：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">loc</span>&gt;</span>http://example.com/<span class="tag">&lt;/<span class="name">loc</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xhtml:link</span> <span class="attr">rel</span>=<span class="string">"alternate"</span> <span class="attr">hreflang</span>=<span class="string">"de"</span> <span class="attr">href</span>=<span class="string">"http://example.com/de"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果配置了sitemap_alternate_links，将会检测<a href="http://example.com/和http://example.com/de。" target="_blank" rel="noopener">http://example.com/和http://example.com/de。</a><br>如果sitemap_alternate_links 为disabled，将只会检测<a href="http://example.com/，默认为disabled。" target="_blank" rel="noopener">http://example.com/，默认为disabled。</a></p>
+<p>例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//解析sitemaps中的所有url</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> SitemapSpider</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(SitemapSpider)</span>:</span></span><br><span class="line">    sitemap_urls = [<span class="string">'http://www.example.com/sitemap.xml'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape item here ...</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//通过sitemap_rules分别指定不同的链接的解析</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> SitemapSpider</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(SitemapSpider)</span>:</span></span><br><span class="line">    sitemap_urls = [<span class="string">'http://www.example.com/sitemap.xml'</span>]</span><br><span class="line">    sitemap_rules = [</span><br><span class="line">        (<span class="string">'/product/'</span>, <span class="string">'parse_product'</span>),</span><br><span class="line">        (<span class="string">'/category/'</span>, <span class="string">'parse_category'</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_product</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape product ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_category</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape category ...</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//通过robots.txt文件跟踪sitemaps，并且只跟踪包含/sitemap_shop的链接</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> SitemapSpider</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(SitemapSpider)</span>:</span></span><br><span class="line">    sitemap_urls = [<span class="string">'http://www.example.com/robots.txt'</span>]</span><br><span class="line">    sitemap_rules = [</span><br><span class="line">        (<span class="string">'/shop/'</span>, <span class="string">'parse_shop'</span>),</span><br><span class="line">    ]</span><br><span class="line">    sitemap_follow = [<span class="string">'/sitemap_shops'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_shop</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape shop here ...</span></span><br></pre></td></tr></table></figure>
+<p>结合SitemapSpider和其他的urls<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> SitemapSpider</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(SitemapSpider)</span>:</span></span><br><span class="line">    sitemap_urls = [<span class="string">'http://www.example.com/robots.txt'</span>]</span><br><span class="line">    sitemap_rules = [</span><br><span class="line">        (<span class="string">'/shop/'</span>, <span class="string">'parse_shop'</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    other_urls = [<span class="string">'http://www.example.com/about'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></span><br><span class="line">        requests = list(super(MySpider, self).start_requests())</span><br><span class="line">        requests += [scrapy.Request(x, self.parse_other) <span class="keyword">for</span> x <span class="keyword">in</span> self.other_urls]</span><br><span class="line">        <span class="keyword">return</span> requests</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_shop</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape shop here ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_other</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># ... scrape other here ...</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Selectors"><a href="#Selectors" class="headerlink" title="Selectors"></a>Selectors</h1><p>当你爬取网站页面的时候，最常见的事情就是从html中提取数据。下面介绍几个这方面的库：</p>
+<ul>
+<li>BeautifulSoup<br>  在python开发者中非常流行的爬虫库，通过html结构创建python对象，能够合理的处理坏标签。但是它有一个缺点：慢。</li>
+<li>lxml<br>  xml解析库，也能解析html，通过一个pythonic的API：ElementTree。lxml不是python标准库的一部分。</li>
+</ul>
+<p>Scrapy有自己的提取数据的机制，被称为selectors，因为它通过XPath或CSS表达式选择HTML中指定部分。</p>
+<p>XPath是一重在XML文档中选择nodes的语言，也能够用于html。CSS是应用于html样式的语言。它定义selectors关联到那些指定样式的html元素。</p>
+<p>Scrapy selectors是建立在lxml库上的，这意味着它们在速度和解析准确度上非常相似。</p>
+<p>下面介绍selectors是如何工作的，以及描述它小而简单的API，不同于lxml API，lxml API非常大，因为它被用来实现很多任务，不仅仅是选择文档标记。</p>
+<p>完整的<a href="https://docs.scrapy.org/en/latest/topics/selectors.html#topics-selectors-ref" target="_blank" rel="noopener">Selector</a>参考</p>
+<h2 id="使用Selectors"><a href="#使用Selectors" class="headerlink" title="使用Selectors"></a>使用Selectors</h2><p><strong>构建Selectors</strong><br>Scrapy selectors是Selector类的实例，通过传入text或TextResponse对象生成。它根据输入的类型自动选择最合适的解析规则（XML vs HTML）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;<span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</span><br><span class="line">&gt;&gt;<span class="keyword">from</span> scrapy.http <span class="keyword">import</span> HtmlResponse</span><br><span class="line">//通过text构建</span><br><span class="line">&gt;&gt;body = <span class="string">'&lt;html&gt;&lt;body&gt;&lt;span&gt;good&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;'</span></span><br><span class="line">&gt;&gt;Selector(text=body).xpath(<span class="string">'//span/text()'</span>).extract()</span><br><span class="line">[<span class="string">u'good'</span>]</span><br><span class="line">//从response构建</span><br><span class="line">&gt;&gt;response = HtmlResponse(url=<span class="string">'http://example.com'</span>,body=body)</span><br><span class="line">&gt;&gt;Selector(response=response).xpath(<span class="string">'//span/text()'</span>).extract()</span><br><span class="line">[<span class="string">u'good]</span></span><br></pre></td></tr></table></figure></p>
+<p>为了更便捷，response暴露了一个属性.selector，完全等价于上面的操作：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.selector.xpath(<span class="string">'//span/text()'</span>).extract()</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用</strong><br>为了解释怎么使用selectors，我们接下来将使用Scrapy shell和Scrapy服务器上的页面做实验：<br><a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">官网链接</a></p>
+<p>HTML文档内容：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">'http://example.com/'</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'images'</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image1.html'</span>&gt;</span>Name: My image 1 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image1_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image2.html'</span>&gt;</span>Name: My image 2 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image2_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image3.html'</span>&gt;</span>Name: My image 3 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image3_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image4.html'</span>&gt;</span>Name: My image 4 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image4_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image5.html'</span>&gt;</span>Name: My image 5 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image5_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>首先，打开shell<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</span><br></pre></td></tr></table></figure></p>
+<p>然后，等待加载完成，你可以通过response变量获取响应结果，并且包含了response.selector属性。<br>因为我们处理的HTML，选择器自动使用HTML parser。<br>查看HTML页面代码，让我们一起构建一个XPath来获取title标记中的文本：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.selector.xpath(<span class="string">'//title/text()'</span>)</span><br><span class="line">[&lt;Selector (text) xpath=//title/text()&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>因为查询响应使用XPath和CSS太常用了，所以reponses提供了2个便利的方式：response.xpath() 和 response.css():<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//title/text()'</span>)</span><br><span class="line">[&lt;Selector (text) xpath=//title/text()&gt;]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'title::text'</span>)</span><br><span class="line">[&lt;Selector (text) xpath=//title/text()&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>如你所见，.xpath()和.css()方法返回一个selector实例的列表，使用这个API可以快速的选择嵌套的数据。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'img'</span>).xpath(<span class="string">'@src'</span>).extract()</span><br><span class="line">[<span class="string">u'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>提取文本数据，你必须使用.extract()方法，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//title/text()'</span>).extract()</span><br><span class="line">[<span class="string">u'Example website'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>如果你只是想提取匹配到的第一个元素，可以使用.extract_first()<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//div[@id="images"]/a/text()'</span>).extract_first()</span><br><span class="line"><span class="string">u'Name: My image 1 '</span></span><br></pre></td></tr></table></figure></p>
+<p>如果没有找到元素将返回None,可通过传递一个参数来设置默认值取代None：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//div[@id="not-exists"]/text()'</span>).extract_first(default=<span class="string">'not-found'</span>)</span><br><span class="line"><span class="string">'not-found'</span></span><br></pre></td></tr></table></figure></p>
+<p>css选择器可以使用css3的伪类元素来选择文本：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'title::text'</span>).extract()</span><br><span class="line">[<span class="string">u'Example website'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们将获取基本的URL和一些图片链接：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//base/@href'</span>).extract()</span><br><span class="line">[<span class="string">u'http://example.com/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'base::attr(href)'</span>).extract()</span><br><span class="line">[<span class="string">u'http://example.com/'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//a[contains(@href, "image")]/@href'</span>).extract()</span><br><span class="line">[<span class="string">u'image1.html'</span>,</span><br><span class="line"> <span class="string">u'image2.html'</span>,</span><br><span class="line"> <span class="string">u'image3.html'</span>,</span><br><span class="line"> <span class="string">u'image4.html'</span>,</span><br><span class="line"> <span class="string">u'image5.html'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'a[href*=image]::attr(href)'</span>).extract()</span><br><span class="line">[<span class="string">u'image1.html'</span>,</span><br><span class="line"> <span class="string">u'image2.html'</span>,</span><br><span class="line"> <span class="string">u'image3.html'</span>,</span><br><span class="line"> <span class="string">u'image4.html'</span>,</span><br><span class="line"> <span class="string">u'image5.html'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">'//a[contains(@href, "image")]/img/@src'</span>).extract()</span><br><span class="line">[<span class="string">u'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image5_thumb.jpg'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.css(<span class="string">'a[href*=image] img::attr(src)'</span>).extract()</span><br><span class="line">[<span class="string">u'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">u'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure></p>
+<p><strong>嵌套选择器</strong><br>.xpath()和.css()返回一些相同类型的selectors，因此你能为这些selectors调用selection的方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>links = response.xpath(<span class="string">'//a[contains(@href, "image")]'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>links.extract()</span><br><span class="line">[<span class="string">u'&lt;a href="image1.html"&gt;Name: My image 1 &lt;br&gt;&lt;img src="image1_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> <span class="string">u'&lt;a href="image2.html"&gt;Name: My image 2 &lt;br&gt;&lt;img src="image2_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> <span class="string">u'&lt;a href="image3.html"&gt;Name: My image 3 &lt;br&gt;&lt;img src="image3_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> <span class="string">u'&lt;a href="image4.html"&gt;Name: My image 4 &lt;br&gt;&lt;img src="image4_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> <span class="string">u'&lt;a href="image5.html"&gt;Name: My image 5 &lt;br&gt;&lt;img src="image5_thumb.jpg"&gt;&lt;/a&gt;'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> index, link <span class="keyword">in</span> enumerate(links):</span><br><span class="line"><span class="meta">... </span>    args = (index, link.xpath(<span class="string">'@href'</span>).extract(), link.xpath(<span class="string">'img/@src'</span>).extract())</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> <span class="string">'Link number %d points to url %s and image %s'</span> % args</span><br><span class="line"></span><br><span class="line">Link number <span class="number">0</span> points to url [<span class="string">u'image1.html'</span>] <span class="keyword">and</span> image [<span class="string">u'image1_thumb.jpg'</span>]</span><br><span class="line">Link number <span class="number">1</span> points to url [<span class="string">u'image2.html'</span>] <span class="keyword">and</span> image [<span class="string">u'image2_thumb.jpg'</span>]</span><br><span class="line">Link number <span class="number">2</span> points to url [<span class="string">u'image3.html'</span>] <span class="keyword">and</span> image [<span class="string">u'image3_thumb.jpg'</span>]</span><br><span class="line">Link number <span class="number">3</span> points to url [<span class="string">u'image4.html'</span>] <span class="keyword">and</span> image [<span class="string">u'image4_thumb.jpg'</span>]</span><br><span class="line">Link number <span class="number">4</span> points to url [<span class="string">u'image5.html'</span>] <span class="keyword">and</span> image [<span class="string">u'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用带正则表达式的选择器</strong><br>Selector还有一个.re()方法，用于使用正则表达式提取数据。然而，不像.xpath()或.css()方法，.re()返回一个unicode字符串的列表。所以.re()不能嵌套。</p>
+<p>从上面的html代码中提取图片名称：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; response.xpath(<span class="string">'//a[contains(@href, "image")]/text()'</span>).re(<span class="string">r'Name:\s*(.*)'</span>)</span><br><span class="line">[<span class="string">u'My image 1'</span>,</span><br><span class="line"> <span class="string">u'My image 2'</span>,</span><br><span class="line"> <span class="string">u'My image 3'</span>,</span><br><span class="line"> <span class="string">u'My image 4'</span>,</span><br><span class="line"> <span class="string">u'My image 5'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>提取匹配的第一个字符串：.re_first()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/text()&apos;).re_first(r&apos;Name:\s*(.*)&apos;)</span><br><span class="line">u&apos;My image 1&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用相对路径的XPaths</strong><br>如果你使用’/‘开头的XPath进行嵌套选择，那么XPath将是相对于文档的绝对路径，而不是上一层选择器的路径。比如，你想选择出所有div下的p元素：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; divs = response.xpath(<span class="string">'//div'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>接下来，你可能想这样提取p元素：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;[p.extract() <span class="keyword">for</span> p <span class="keyword">in</span> div.xpath(<span class="string">'//p'</span>)]</span><br></pre></td></tr></table></figure></p>
+<p>但是，这是错误的，这样将提取到所有的p元素。应该这样来写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; [p.extract() <span class="keyword">for</span> p <span class="keyword">in</span> div.xpath(<span class="string">'.//p'</span>)]</span><br></pre></td></tr></table></figure></p>
+<p>更多关于<a href="https://www.w3.org/TR/xpath#location-paths" target="_blank" rel="noopener">XPath相对路径</a>的资料</p>
+<p><strong>XPath表达式中的变量</strong><br>XPath允许在表达式中使用变量，语法：$var。<br>下面通过id属性的值来匹配元素，没有硬编码。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; response.xpath(<span class="string">'//div[@id=$val]/a/text()'</span>,val=<span class="string">'images'</span>).extract_first()</span><br><span class="line"><span class="string">u'Name: My image 1'</span></span><br></pre></td></tr></table></figure></p>
+<p>另外一个例子：查找含有5个a标签的div的id<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; response.xpath(<span class="string">'//div[count(a)=$cnt]/@id'</span>,cnt=<span class="number">5</span>).extract_first()</span><br><span class="line"><span class="string">u'images'</span></span><br></pre></td></tr></table></figure></p>
+<p>所有引用的变量都必须赋值，不然xpath将报错。<br>更多关于<a href="https://parsel.readthedocs.io/en/latest/usage.html#variables-in-xpath-expressions" target="_blank" rel="noopener">XPath Variable</a></p>
+<p><strong>使用EXSLT扩展</strong></p>
+<p>建立在lxml上，Scrapy选择器也支持EXSLT扩展，内置了一些预先注册好的命名空间可以在XPath表达式中使用。</p>
+<table>
+<thead>
+<tr>
+<th>prefix</th>
+<th>namespace</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re</td>
+<td><a href="http://exslt.org/regular-expressions" target="_blank" rel="noopener">http://exslt.org/regular-expressions</a></td>
+<td>regular expressions</td>
+</tr>
+<tr>
+<td>set</td>
+<td><a href="http://exslt.org/sets" target="_blank" rel="noopener">http://exslt.org/sets</a></td>
+<td>set manipulation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>正则表达式</strong></p>
+<p>当XPath的starts-with()或contains()不够用的时候，test()函数将会非常有用。<br>例如:从class以数字结尾的list的元素下提取链接。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;<span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line">&gt;&gt; doc = <span class="string">"""</span></span><br><span class="line"><span class="string"><span class="meta">... </span>&lt;div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;ul&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>        &lt;li class="item-0"&gt;&lt;a href="link1.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>        &lt;li class="item-1"&gt;&lt;a href="link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>        &lt;li class="item-inactive"&gt;&lt;a href="link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>        &lt;li class="item-1"&gt;&lt;a href="link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>        &lt;li class="item-0"&gt;&lt;a href="link5.html"&gt;fifth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;/ul&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>&lt;/div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>"""</span></span><br><span class="line">&gt;&gt; sel = Selector(text=doc,type=<span class="string">'html'</span>)</span><br><span class="line">&gt;&gt; sel.xpath(<span class="string">'//li//a/@href'</span>).extract()</span><br><span class="line">[<span class="string">u'link1.html'</span>, <span class="string">u'link2.html'</span>, <span class="string">u'link3.html'</span>, <span class="string">u'link4.html'</span>, <span class="string">u'link5.html'</span>]</span><br><span class="line">&gt;&gt; sel.xpath(<span class="string">'//li[re:test(@class,"item-\d$")]//@href'</span>).extract()</span><br><span class="line">[<span class="string">u'link1.html'</span>, <span class="string">u'link2.html'</span>, <span class="string">u'link4.html'</span>, <span class="string">u'link5.html'</span>]</span><br></pre></td></tr></table></figure></p>
+<p><strong>设置操作</strong><br>可以方便的在提取文本元素前排除部分dom元素。<br>例如提取item的范围和相对应的属性<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>doc = <span class="string">"""</span></span><br><span class="line"><span class="string"><span class="meta">... </span>&lt;div itemscope itemtype="http://schema.org/Product"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;span itemprop="name"&gt;Kenmore White 17" Microwave&lt;/span&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;img src="kenmore-microwave-17in.jpg" alt='Kenmore 17" Microwave' /&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;div itemprop="aggregateRating"</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    itemscope itemtype="http://schema.org/AggregateRating"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>   Rated &lt;span itemprop="ratingValue"&gt;3.5&lt;/span&gt;/5</span></span><br><span class="line"><span class="string"><span class="meta">... </span>   based on &lt;span itemprop="reviewCount"&gt;11&lt;/span&gt; customer reviews</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;/div&gt;</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;div itemprop="offers" itemscope itemtype="http://schema.org/Offer"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;span itemprop="price"&gt;$55.00&lt;/span&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;link itemprop="availability" href="http://schema.org/InStock" /&gt;In stock</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;/div&gt;</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  Product description:</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;span itemprop="description"&gt;0.7 cubic feet countertop microwave.</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  Has six preset cooking categories and convenience features like</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  Add-A-Minute and Child Lock.&lt;/span&gt;</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  Customer reviews:</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;div itemprop="review" itemscope itemtype="http://schema.org/Review"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;span itemprop="name"&gt;Not a happy camper&lt;/span&gt; -</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    by &lt;span itemprop="author"&gt;Ellie&lt;/span&gt;,</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;meta itemprop="datePublished" content="2011-04-01"&gt;April 1, 2011</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;meta itemprop="worstRating" content = "1"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;span itemprop="ratingValue"&gt;1&lt;/span&gt;/</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;span itemprop="bestRating"&gt;5&lt;/span&gt;stars</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;/div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;span itemprop="description"&gt;The lamp burned out and now I have to replace</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    it. &lt;/span&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;/div&gt;</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;div itemprop="review" itemscope itemtype="http://schema.org/Review"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;span itemprop="name"&gt;Value purchase&lt;/span&gt; -</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    by &lt;span itemprop="author"&gt;Lucas&lt;/span&gt;,</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;meta itemprop="datePublished" content="2011-03-25"&gt;March 25, 2011</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;meta itemprop="worstRating" content = "1"/&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;span itemprop="ratingValue"&gt;4&lt;/span&gt;/</span></span><br><span class="line"><span class="string"><span class="meta">... </span>      &lt;span itemprop="bestRating"&gt;5&lt;/span&gt;stars</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;/div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    &lt;span itemprop="description"&gt;Great microwave for the price. It is small and</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    fits in my apartment.&lt;/span&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  &lt;/div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>  ...</span></span><br><span class="line"><span class="string"><span class="meta">... </span>&lt;/div&gt;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>"""</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel = Selector(text=doc, type=<span class="string">"html"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> scope <span class="keyword">in</span> sel.xpath(<span class="string">'//div[@itemscope]'</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> <span class="string">"current scope:"</span>, scope.xpath(<span class="string">'@itemtype'</span>).extract()</span><br><span class="line"><span class="meta">... </span>    props = scope.xpath(<span class="string">'''</span></span><br><span class="line"><span class="string"><span class="meta">... </span>                set:difference(./descendant::*/@itemprop,</span></span><br><span class="line"><span class="string"><span class="meta">... </span>                               .//*[@itemscope]/*/@itemprop)'''</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> <span class="string">"    properties:"</span>, props.extract()</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span></span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Product'</span>]</span><br><span class="line">    properties: [<span class="string">u'name'</span>, <span class="string">u'aggregateRating'</span>, <span class="string">u'offers'</span>, <span class="string">u'description'</span>, <span class="string">u'review'</span>, <span class="string">u'review'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/AggregateRating'</span>]</span><br><span class="line">    properties: [<span class="string">u'ratingValue'</span>, <span class="string">u'reviewCount'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Offer'</span>]</span><br><span class="line">    properties: [<span class="string">u'price'</span>, <span class="string">u'availability'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Review'</span>]</span><br><span class="line">    properties: [<span class="string">u'name'</span>, <span class="string">u'author'</span>, <span class="string">u'datePublished'</span>, <span class="string">u'reviewRating'</span>, <span class="string">u'description'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Rating'</span>]</span><br><span class="line">    properties: [<span class="string">u'worstRating'</span>, <span class="string">u'ratingValue'</span>, <span class="string">u'bestRating'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Review'</span>]</span><br><span class="line">    properties: [<span class="string">u'name'</span>, <span class="string">u'author'</span>, <span class="string">u'datePublished'</span>, <span class="string">u'reviewRating'</span>, <span class="string">u'description'</span>]</span><br><span class="line"></span><br><span class="line">current scope: [<span class="string">u'http://schema.org/Rating'</span>]</span><br><span class="line">    properties: [<span class="string">u'worstRating'</span>, <span class="string">u'ratingValue'</span>, <span class="string">u'bestRating'</span>]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>首先，遍历了itemscope元素，针对每个itemscope查找itemprops并排除那些包含在其他itemscop中的itemprops。</p>
+<p><strong>关于XPath的一些建议</strong><br><a href="https://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches/?_ga=2.21172475.1955907946.1512143556-1857011771.1512143556" target="_blank" rel="noopener">一篇来自ScrapingHub的博客</a><br><a href="http://www.zvon.org/comp/r/tut-XPath_1.html" target="_blank" rel="noopener">XPath文档</a></p>
+<p>使用text节点的时候需要注意，当你将text内容作为参数传递给XPath string function时，避免使用.//text()，用.代替即可。<br>因为表达式.//text()产生一个text元素的集合node-set,当node-set转换为string的时候，比如传递给contains()或starts-width()，将导致只会传递第一个元素的值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel = Selector(text=<span class="string">'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel.xpath(<span class="string">'//a//text()'</span>).extract() <span class="comment"># take a peek at the node-set</span></span><br><span class="line">[<span class="string">u'Click here to go to the '</span>, <span class="string">u'Next Page'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel.xpath(<span class="string">"string(//a[1]//text())"</span>).extract() <span class="comment"># convert it to string</span></span><br><span class="line">[<span class="string">u'Click here to go to the '</span>]</span><br></pre></td></tr></table></figure></p>
+<p>将一个node节点转换为string,将提取出该节点下的所有text<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel.xpath(<span class="string">"//a[1]"</span>).extract() <span class="comment"># select the first node</span></span><br><span class="line">[<span class="string">u'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel.xpath(<span class="string">"string(//a[1])"</span>).extract() <span class="comment"># convert it to string</span></span><br><span class="line">[<span class="string">u'Click here to go to the Next Page'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>所以，选择含有Next Page文本的a标签，如果这样写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sel.xpath(<span class="string">"//a[contains(.//text(),'Next Page')]"</span>).extract()</span><br><span class="line">[]</span><br></pre></td></tr></table></figure></p>
+<p>将不会有任何输出，因为原意是想先获取a的所有文本，然后检测是否包含’Next Page’,<br>但是此处的.//text()转换为string只会输出[u’Click here to go to the ‘],并不包含’Next Page’。所以，应该这样写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sel.xpath(<span class="string">"//a[contains(.,'Next Page')]"</span>).extract()</span><br><span class="line">[<span class="string">u'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>注意区分 //node[1] 和 (//node)[1]<br><code>//node[1]</code>选择所有匹配节点各自父节点的第一个子节点<br><code>(//node)[1]</code>选择文档中的所有匹配节点，然后返回第一个<br>例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel = Selector(text=<span class="string">"""</span></span><br><span class="line"><span class="string">....:     &lt;ul class="list"&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;1&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;2&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;3&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:     &lt;/ul&gt;</span></span><br><span class="line"><span class="string">....:     &lt;ul class="list"&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;4&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;5&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:         &lt;li&gt;6&lt;/li&gt;</span></span><br><span class="line"><span class="string">....:     &lt;/ul&gt;"""</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xp = <span class="keyword">lambda</span> x: sel.xpath(x).extract()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xp(<span class="string">"//li[1]"</span>)</span><br><span class="line">[<span class="string">u'&lt;li&gt;1&lt;/li&gt;'</span>, <span class="string">u'&lt;li&gt;4&lt;/li&gt;'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xp(<span class="string">"(//li)[1]"</span>)</span><br><span class="line">[<span class="string">u'&lt;li&gt;1&lt;/li&gt;'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xp(<span class="string">"//ul/li[1]"</span>)</span><br><span class="line">[<span class="string">u'&lt;li&gt;1&lt;/li&gt;'</span>, <span class="string">u'&lt;li&gt;4&lt;/li&gt;'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xp(<span class="string">"(//ul/li)[1]"</span>)</span><br><span class="line">[<span class="string">u'&lt;li&gt;1&lt;/li&gt;'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>使用class查询时，考虑使用CSS<br>因为一个元素能够包含多个css，XPath选择元素相对css来说是很冗长的：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*[contains(concat(' ', normalize-space(@class), ' '), ' someclass ')]</span><br></pre></td></tr></table></figure></p>
+<p>如果你使用<code>@class=&#39;someclass&#39;</code>，将会丢失许多含有其他class的元素，如果使用<code>contains(@class,&#39;someclass&#39;)</code>，将有可能包含多余的class含有someclass子字符串的元素。<br>Scrapy允许链式调用selectors，所以你可以先用css选择然后再用xpath。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel = Selector(text=<span class="string">'&lt;div class="hero shout"&gt;&lt;time datetime="2014-07-23 19:00"&gt;Special date&lt;/time&gt;&lt;/div&gt;'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sel.css(<span class="string">'.shout'</span>).xpath(<span class="string">'./time/@datetime'</span>).extract()</span><br><span class="line">[<span class="string">u'2014-07-23 19:00'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="内置的Selectors参考"><a href="#内置的Selectors参考" class="headerlink" title="内置的Selectors参考"></a>内置的Selectors参考</h3><h4 id="Selector-对象"><a href="#Selector-对象" class="headerlink" title="Selector 对象"></a>Selector 对象</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">selector</span>.<span class="title">Selector</span><span class="params">(response=None,text=None,type=None)</span></span></span><br></pre></td></tr></table></figure>
+<p>Selector的实例是包装在response上用于提取指定的内容。<br><code>response</code>:一个 <code>HtmlResponse</code>或<code>XmlResponse</code>对象，用于选择和导出数据。<br><code>text</code>:unicode字符串或utf-8编码的文本，当<code>response</code>不存在的情况下。同时使用<code>text</code>和<code>response</code>是不可行的。<br><code>type</code>:定义选择器类型:”html”，”xml”或”None”(默认)</p>
+<p>如果<code>type</code>为<code>None</code>时，选择器自动根据<code>response</code>选择最合适的类型，或如果类型为<code>text</code>时将默认为<code>&quot;html&quot;</code>。<br>如果<code>type</code>为<code>None</code>，传递了<code>response</code>，选择器类型将从<code>response</code>类型中推算：</p>
+<ul>
+<li><code>&quot;html&quot;</code>：<code>HtmlResponse</code></li>
+<li><code>&quot;xml&quot;</code>：<code>XmlResponse</code></li>
+<li><code>&quot;html&quot;</code>：anything</li>
+</ul>
+<p>否则，如果<code>type</code>设定了，选择器类型将被强制指定为type，不再进行检测。</p>
+<blockquote>
+<p>xpath(query)</p>
+<p>css(query)</p>
+<p>extract()</p>
+<p>re(regex)</p>
+<p>register_namespace(prefix,url)</p>
+<p>remove_namespaces()</p>
+<p><strong>nonzero</strong>()<br>是否选中内容</p>
+</blockquote>
+<h4 id="SelectorList-objects"><a href="#SelectorList-objects" class="headerlink" title="SelectorList objects"></a>SelectorList objects</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">scrapy</span>.<span class="title">selector</span>.<span class="title">SelectorList</span></span></span><br></pre></td></tr></table></figure>
+<p><code>SelectorList</code>类是<code>list</code>的一个子类，提供了一些附加的方法。</p>
+<blockquote>
+<p>xpath(query)</p>
+<p>css(query)</p>
+<p>extract()</p>
+<p>re()</p>
+</blockquote>
+<h4 id="基于HTML-Response的Selector例子"><a href="#基于HTML-Response的Selector例子" class="headerlink" title="基于HTML Response的Selector例子"></a>基于HTML Response的Selector例子</h4><p>假定sel是用一个<code>HtmlResponse</code>实例化的<code>Selector</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sel = Selector(html_response)</span><br><span class="line">sel.xpath(<span class="string">"//h1"</span>)</span><br><span class="line">sel.xpath(<span class="string">"//h1"</span>).extract()  <span class="comment"># includes h1</span></span><br><span class="line">sel.xpath(<span class="string">"//h1/text()"</span>).extract() <span class="comment"># excludes h1</span></span><br><span class="line"><span class="comment"># 遍历所有的p标签，打印它们的类属性</span></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> sel.xpath(<span class="string">"//p"</span>):</span><br><span class="line">    <span class="keyword">print</span> node.xpath(<span class="string">"@class"</span>).extract()</span><br></pre></td></tr></table></figure></p>
+<h4 id="基于XML-Response的Selector例子"><a href="#基于XML-Response的Selector例子" class="headerlink" title="基于XML Response的Selector例子"></a>基于XML Response的Selector例子</h4><p>假设sel是用<code>XmlResponse</code>实例化的<code>Selector</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sel = Selector(xml_response)</span><br><span class="line">sel.xpath(<span class="string">"//product"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>从指定文档提取所有价格，需要使用命名空间：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sel.register_namespace(<span class="string">"g"</span>,<span class="string">"http://base.google.com/ns/1.0"</span>)</span><br><span class="line">sel.xpath(<span class="string">"//g:price"</span>).extract()</span><br></pre></td></tr></table></figure></p>
+<p><strong>移除命名空间</strong></p>
+<p>在Scrapy项目中，为了写更多简单便捷的XPaths,经常需要移除命名空间，仅剩元素名称。<br><code>Selector.remove_namespaces()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; scrapy shell https://github.com/blog.atom</span><br><span class="line">&gt;&gt; response.xpath(<span class="string">"//link"</span>)</span><br><span class="line">[]</span><br><span class="line"><span class="comment"># 因为Atom XML命名空间扰乱了节点</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.selector.remove_namespaces()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>response.xpath(<span class="string">"//link"</span>)</span><br><span class="line">[&lt;Selector xpath=<span class="string">'//link'</span> data=<span class="string">u'&lt;link xmlns="http://www.w3.org/2005/Atom'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'//link'</span> data=<span class="string">u'&lt;link xmlns="http://www.w3.org/2005/Atom'</span>&gt;,</span><br><span class="line"> ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>不默认移除命名空间的原因有二：</p>
+<ol>
+<li>移除命名空间需要遍历所有的文档，对于爬虫来说这是一个相当费时且昂贵的操作。</li>
+<li>有些时候需要使用命名空间来避免名称冲突。</li>
+</ol>
+<h1 id="Items"><a href="#Items" class="headerlink" title="Items"></a>Items</h1><h2 id="声明Itmes"><a href="#声明Itmes" class="headerlink" title="声明Itmes"></a>声明Itmes</h2><p>使用class和<code>Field</code>对象来声明一个Item，如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line">Class Product(scrapy.Item):</span><br><span class="line">    name = scrapy.Field()</span><br><span class="line">    price = scrapy.Field()</span><br><span class="line">    stock = scrapy.Field()</span><br><span class="line">    last_updated = scrapy.Field(serializer=str)</span><br></pre></td></tr></table></figure></p>
+<pre><code>注意：Scrapy中的Items定义和Django中Models定义很像，不同的是Items中没有多种字段类型，只有简单的`scrapy.Field`
+</code></pre><h2 id="Item-Fields"><a href="#Item-Fields" class="headerlink" title="Item Fields"></a>Item Fields</h2><p><code>Field</code>对象为每个字段指定metadata，例如上例中<code>last_updated</code>字段的serializer方法。</p>
+<p>可以为每个字段指定任何类型的metadata,Field对象并没有限制接收的values，所以，这里并没有列出所有的<code>metadata keys</code>。在Field对象中定义的每个字段对应不同的功能，你也可以根据你的需要定义别的字段。<code>Field</code>对象的主要目标是提供一种在一个地方定义所有元数据(metadata)的方法。你可以查阅相关文档来使用metadata。</p>
+<p>值得注意的是<code>Field</code>对象用来声明item字段的时候，该字段并不是作为类的属性，<br>相反，可以通过<code>Item.fields</code>(此处Item对应Product)属性来访问。(类似dict而不是object)</p>
+<h2 id="使用Items"><a href="#使用Items" class="headerlink" title="使用Items"></a>使用Items</h2><p>这里有一些使用items的通用案例，使用上面声明的<code>Product</code>，你将会发现API非常类似<code>dict API</code></p>
+<h3 id="创建items"><a href="#创建items" class="headerlink" title="创建items"></a>创建items</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>product = Product(name=<span class="string">'Desktop PC'</span>,price=<span class="number">1000</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> product</span><br><span class="line">Product(name=<span class="string">'Desktop PC'</span>,price=<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="获取字段值"><a href="#获取字段值" class="headerlink" title="获取字段值"></a>获取字段值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; product[<span class="string">'name'</span>]</span><br><span class="line">Desktop PC</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product.get(<span class="string">'name'</span>)</span><br><span class="line">Desktop PC</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'price'</span>]</span><br><span class="line"><span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'last_updated'</span>]</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    ...</span><br><span class="line">KeyError: <span class="string">'last_updated'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product.get(<span class="string">'last_updated'</span>, <span class="string">'not set'</span>)</span><br><span class="line"><span class="keyword">not</span> set</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'lala'</span>] <span class="comment"># getting unknown field</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    ...</span><br><span class="line">KeyError: <span class="string">'lala'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product.get(<span class="string">'lala'</span>, <span class="string">'unknown field'</span>)</span><br><span class="line"><span class="string">'unknown field'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'name'</span> <span class="keyword">in</span> product  <span class="comment"># is name field populated?</span></span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'last_updated'</span> <span class="keyword">in</span> product  <span class="comment"># is last_updated populated?</span></span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'last_updated'</span> <span class="keyword">in</span> product.fields  <span class="comment"># is last_updated a declared field?</span></span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'lala'</span> <span class="keyword">in</span> product.fields  <span class="comment"># is lala a declared field?</span></span><br><span class="line"><span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置字段值"><a href="#设置字段值" class="headerlink" title="设置字段值"></a>设置字段值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'last_updated'</span>] = <span class="string">'today'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'last_updated'</span>]</span><br><span class="line">today</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product[<span class="string">'lala'</span>] = <span class="string">'test'</span> <span class="comment"># setting unknown field</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    ...</span><br><span class="line">KeyError: <span class="string">'Product does not support field: lala'</span></span><br></pre></td></tr></table></figure>
+<h3 id="访问所有值"><a href="#访问所有值" class="headerlink" title="访问所有值"></a>访问所有值</h3><p>类似使用字典的API<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>product.keys()</span><br><span class="line">[<span class="string">'price'</span>,<span class="string">'name'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product.items()</span><br><span class="line">[(<span class="string">'price'</span>, <span class="number">1000</span>), (<span class="string">'name'</span>, <span class="string">'Desktop PC'</span>)]</span><br></pre></td></tr></table></figure></p>
+<h3 id="其他通用的任务"><a href="#其他通用的任务" class="headerlink" title="其他通用的任务"></a>其他通用的任务</h3><p><strong>复制items</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>product2 = Product(product)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> product2</span><br><span class="line">Product(name=<span class="string">'Desktop PC'</span>, price=<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>product3 = product2.copy()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> product3</span><br><span class="line">Product(name=<span class="string">'Desktop PC'</span>, price=<span class="number">1000</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>items to dicts</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>dict(product) <span class="comment"># create a dict from all populated values</span></span><br><span class="line">&#123;<span class="string">'price'</span>: <span class="number">1000</span>, <span class="string">'name'</span>: <span class="string">'Desktop PC'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>dicts to items</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Product(&#123;<span class="string">'name'</span>: <span class="string">'Laptop PC'</span>, <span class="string">'price'</span>: <span class="number">1500</span>&#125;)</span><br><span class="line">Product(price=<span class="number">1500</span>, name=<span class="string">'Laptop PC'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Product(&#123;<span class="string">'name'</span>: <span class="string">'Laptop PC'</span>, <span class="string">'lala'</span>: <span class="number">1500</span>&#125;) <span class="comment"># warning: unknown field in dict</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    ...</span><br><span class="line">KeyError: <span class="string">'Product does not support field: lala'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="扩展Items"><a href="#扩展Items" class="headerlink" title="扩展Items"></a>扩展Items</h2><p>可以通过继承Item来创建新的Item,以便增加字段或改变某些字段的信息。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DiscountedProduct</span><span class="params">(Product)</span>:</span></span><br><span class="line">    discount_percent = scrapy.Field(serializer=str)</span><br><span class="line">    discount_expiration_date = scrapy.Field()</span><br></pre></td></tr></table></figure></p>
+<p>你也可以使用前面定义的字段元数据来扩展字段元数据，添加或改变原来的值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpecificProduct</span><span class="params">(Product)</span>:</span></span><br><span class="line">    name = scrapy.Field(Product.fields[<span class="string">'name'</span>], serializer=my_serializer)</span><br></pre></td></tr></table></figure></p>
+<p>此处扩展了Product的name字段的元数据，并在原来的基础上增加了serializer元数据。</p>
+<h2 id="Item对象"><a href="#Item对象" class="headerlink" title="Item对象"></a>Item对象</h2><p><code>class scrapy.item.Item([arg])</code><br>    从所给的参数中返回一个可选的初始化Item。<br>    Items复制了标准的dict API,包括它的构造函数。只是添加了<code>fields</code>属性。</p>
+<pre><code>&gt; fields    
+    包含了所有声明字段的字典。字段的名称作为键，声明的`Field`对象作为值。
+</code></pre><h2 id="Field对象"><a href="#Field对象" class="headerlink" title="Field对象"></a>Field对象</h2><p><code>class scrapy.item.Field([arg])</code><br>    <code>Field</code>类只是内置dict类的一个别名，没有提供任何额外的功能或属性。换句话说Field只是普通的Python字典。一个单独用类属性来声明Item的类。</p>
+<h1 id="Item-Loaders"><a href="#Item-Loaders" class="headerlink" title="Item Loaders"></a>Item Loaders</h1><p>Item Loaders为构建<code>scraped Itmes</code>提供了便捷的途径。即使能够使用Item的类字典API来构建，但是Item Loaders在爬取过程中提供了许多便捷的API来构建items，通过一些自动化的通用任务，比如:在分发之前解析原始提取到的数据。</p>
+<p>换句话说，Items为爬取到的数据提供容器，而<code>Item Loaders</code>提供便捷的途径来构造这个容器。</p>
+<p><code>Item Loaders</code>被设计为灵活、高效和简单的机制来扩展和覆盖不同字段的解析规则，无论是爬虫还是源格式(HTML，XML)维护起来都很方便。</p>
+<h2 id="使用Item-Loaders来构建Items"><a href="#使用Item-Loaders来构建Items" class="headerlink" title="使用Item Loaders来构建Items"></a>使用Item Loaders来构建Items</h2><p>使用Item Loader前需要先实例化，你可以使用类字典(Item或者dict)或Item Loader构造器使用ItemLoader.default_item_class指定的属性来自动实例化Item。</p>
+<p>然后，开始收集数据到Item Loader，通常使用Selectors。你可以添加多个值到相同的item字段，Item Loader会用合适的方法来处理。</p>
+<p>这里有一个经典的Item Loader使用案例，使用前面章节定义的Product Item:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.loader <span class="keyword">import</span> ItemLoader</span><br><span class="line"><span class="keyword">from</span> myproject.items <span class="keyword">import</span> Product</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self,response)</span>:</span></span><br><span class="line">    l = ItemLoader(item=Product(),response=response)</span><br><span class="line">    l.add_xpath(<span class="string">'name'</span>,<span class="string">'//div[@class="product_name"]'</span>)</span><br><span class="line">    l.add_xpath(<span class="string">'name'</span>,<span class="string">'//div[@class="product_title"]'</span>)</span><br><span class="line">    l.add_xpath(<span class="string">'price'</span>,<span class="string">'//p[@id="price"]'</span>)</span><br><span class="line">    l.add_css(<span class="string">'stock'</span>,<span class="string">'p#stock'</span>)</span><br><span class="line">    l.add_value(<span class="string">'last_updated'</span>,<span class="string">'today'</span>)</span><br><span class="line">    <span class="keyword">return</span> l.load_item()</span><br></pre></td></tr></table></figure></p>
+<p>从上面的代码可以看到，name字段从不同的页面提取了2次：<br>1.<code>//div[@class=&quot;product_name&quot;]</code><br>2.<code>//div[@class=&quot;product_title&quot;]</code></p>
+<p>换句话说，被指定给name字段的数据通过add_xpath()方法从2个XPath路径提取。</p>
+<p>然后，同样的方法添加price和stock(stock使用CSS选择器add_css()方法添加)，最后用add_value直接给last_updated赋值’today’。</p>
+<p>最后，当所有数据收集完成，<code>ItemLoader.load_item()</code>方法被调用，并返回用前面的<code>add_xpath()</code>,<code>add_css()</code>,<code>add_value()</code>提取的数据填充的item。</p>
+<h2 id="输入输出处理"><a href="#输入输出处理" class="headerlink" title="输入输出处理"></a>输入输出处理</h2><p>每个Item Loader为每个Item 字段都有一个输入处理器和一个输出处理器。输入处理器在收到数据的时候通过<code>add_xpath()</code>,<code>add_css()</code>,<code>add_value()</code>方法尽快提取数据，输入处理器的处理结果将被收集并存储在ItemLoader中。待所有数据收集完成，<code>ItemLoader.load_item()</code>方法将被调用，构建并返回Item对象。此时，伴随着前面提取的数据输出处理器将被调用。输出处理器的结果将是Item的最终值。</p>
+<p>下面通过一个例子来阐明输入、输出处理器针对特定字段是怎样被调用的(其他字段是同样的原理)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">l = ItemLoader(Product(),some_selector)</span><br><span class="line">l.add_xpath(<span class="string">'name'</span>,xpath1) <span class="comment"># 1</span></span><br><span class="line">l.add_xpath(<span class="string">'name'</span>,xpath2) <span class="comment"># 2</span></span><br><span class="line">l.add_css(<span class="string">'name'</span>,css) <span class="comment"># 3</span></span><br><span class="line">l.add_value(<span class="string">'name'</span>,<span class="string">'test'</span>) <span class="comment"># 4</span></span><br><span class="line"><span class="keyword">return</span> l.load_item() <span class="comment"># 5</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>数据从<code>xpath1</code>被提取，然后传递给name字段的输入处理器，<br>输入处理器的结果被收集并保持在Item Loader中（并没有赋值给item)。</li>
+<li>同上，数据提取后appended到1提取到的数据中。</li>
+<li>同上，提取方法改变而已，数据提取后appended到1、2提取到的数据中。</li>
+<li>同上，只是这里的value被转换为一个可迭代的元素，因为输入处理器只能接受可迭代的参数。数据提取后appended到1、2、3提取到的数据中。</li>
+<li>1/2/3/4步中提取的数据被传递给输出处理器，输出处理器的结果将被赋值给item。</li>
+</ol>
+<p>值得注意的是，处理器只是可调用的对象，这些对象伴随着要解析的数据被调用，并返回一个已解析的值。因此，您可以使用任何函数作为输入或输出处理器。唯一的要求是它们必须接受一个(并且只有一个)可迭代的参数。</p>
+<pre><code>注意：输入、输出处理器必须接受一个迭代器作为它的第一个参数。那些输出方法可任意，输入处理器的结果将被添加至一个内部的list(在Loader中)，包含收集到的该字段的值
+。输出处理器的值最终将被赋给item。
+</code></pre><p>最后，Scrapy自带了一些通用的处理器。</p>
+<h2 id="声明Item-Loaders"><a href="#声明Item-Loaders" class="headerlink" title="声明Item Loaders"></a>声明Item Loaders</h2><p>Item Loaders像Items一样使用类定义语法来声明。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.loader <span class="keyword">import</span> ItemLoader</span><br><span class="line"><span class="keyword">from</span> scrapy.loader.processors <span class="keyword">import</span> TakeFirst,MapCompose,Join</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductLoader</span><span class="params">(ItemLoader)</span>:</span></span><br><span class="line">    defaule_output_processor = TakeFirst()</span><br><span class="line">    name_in = MapCompose(unicode.title)</span><br><span class="line">    name_out = Join()</span><br><span class="line">    price_in = MapCompose(unicode.strip)</span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure></p>
+<p>如你所见，输入处理器使用<code>_in</code>后缀来声明，而输出处理器使用<code>_out</code>后缀。你也可以通过<code>ItemLoader.default_input_processor</code>和<code>ItemLoader.default_output_processor</code>定义默认的输入/输出处理器。</p>
+<h2 id="定义输入输出处理器"><a href="#定义输入输出处理器" class="headerlink" title="定义输入输出处理器"></a>定义输入输出处理器</h2><p><a href="https://docs.scrapy.org/en/latest/topics/loaders.html#declaring-input-and-output-processors" target="_blank" rel="noopener">官网</a></p>
+<p><span id="feed_export"></span></p>
+<h1 id="Feed-exports"><a href="#Feed-exports" class="headerlink" title="Feed exports"></a>Feed exports</h1><blockquote>
+<p>New in version 0.10.</p>
+</blockquote>
+<p>实现爬虫最常用的一个特性，用于存储爬取到的数据，通常会使用爬取到的数据生成一个“export file”（通常叫作“export feed”）。</p>
+<p>Scrapy通过Feed Exports提供了开箱即用的功能，允许你将scraped items生成多种序列化的feed格式，并在后端存储。</p>
+<h2 id="序列化格式"><a href="#序列化格式" class="headerlink" title="序列化格式"></a>序列化格式</h2><p>feed exports使用<a href="#item_exporters"><code>Item exporters</code></a>序列化爬取到的数据。这些格式开箱即用:</p>
+<pre><code>- JSON
+- JSON lines
+- CSV
+- XML 
+</code></pre><p>但是，你也可以扩展支持的格式，通过<code>FEED_EXPORTERS</code>设置。</p>
+<h3 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>json</code></li>
+<li>Exporter used:<code>JsonItemExporter</code></li>
+<li>JSON with large feeds.<a href="https://docs.scrapy.org/en/latest/topics/exporters.html#json-with-large-data" target="_blank" rel="noopener">warning</a></li>
+</ul>
+<h3 id="JSON-lines"><a href="#JSON-lines" class="headerlink" title="JSON lines"></a>JSON lines</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>jsonlines</code></li>
+<li>Exporter used:<code>JsonLinesItemExporter</code></li>
+</ul>
+<h3 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>csv</code></li>
+<li>Exporter used:<code>CsvItemExporter</code></li>
+<li>通过<code>FEED_EXPORT_FIELDS</code>指定导出的列和顺序。其他格式也可以使用这个选项，但是CSV不像其他格式，它使用的是固定的头部。</li>
+</ul>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>xml</code></li>
+<li>Exporter used:<code>XmlItemExporter</code></li>
+</ul>
+<h3 id="Pickle"><a href="#Pickle" class="headerlink" title="Pickle"></a>Pickle</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>pickle</code></li>
+<li>Exporter used:<code>PickleItemExporter</code></li>
+</ul>
+<h3 id="Marshal"><a href="#Marshal" class="headerlink" title="Marshal"></a>Marshal</h3><ul>
+<li><code>FEED_FORMAT</code>:<code>marshal</code></li>
+<li>Exporter used:<code>MarshalItemExporter</code></li>
+</ul>
+<h2 id="Storages"><a href="#Storages" class="headerlink" title="Storages"></a>Storages</h2><p>使用URI定义存储feed的位置(通过<code>FEED_URI</code>设置)。feed exports支持多种后端存储格式，通过URI方案定义。<br>后端开箱即用的存储格式：</p>
+<ul>
+<li>本地文件系统</li>
+<li>FTP</li>
+<li>S3(需要botocore 或 boto)</li>
+<li>标准输出</li>
+</ul>
+<p>如果依赖的额外库不可用的话，有的后端存储将不可用。例如：S3后端只有当botocore和boto库都已安装才可用。(Scrapy只在Python 2上支持boto)</p>
+<h3 id="Storage-URI参数"><a href="#Storage-URI参数" class="headerlink" title="Storage URI参数"></a>Storage URI参数</h3><p>存储URI还包含在创建是被替换的参数，被替换的参数如下：</p>
+<ul>
+<li><code>%(time)s</code> 当feed被创建时用时间戳替换</li>
+<li><code>%(name)s%</code>被爬虫名称替换</li>
+</ul>
+<p>其他的参数将会被爬虫的同名属性替换，如<code>%(site_id)s</code>在feed被创建的时候将会被<code>spider.site_id</code>属性替换。</p>
+<p>下面有一些例子来解释：</p>
+<ul>
+<li><p>使用FTP存储，每个爬虫一个目录</p>
+<ul>
+<li><code>ftp://user:password@ftp.example.com/scraping/feeds/%(name)s/%(time)s.json</code></li>
+</ul>
+</li>
+<li><p>使用S3存储，每个爬虫一个目录   </p>
+<ul>
+<li><code>s3://mybucket/scraping/feeds/%(name)s/%(time)s.json</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Storage-backends"><a href="#Storage-backends" class="headerlink" title="Storage backends"></a>Storage backends</h2><h3 id="本地文件系统"><a href="#本地文件系统" class="headerlink" title="本地文件系统"></a>本地文件系统</h3><p>feeds存储在本地系统：</p>
+<ul>
+<li>URI scheme:文件</li>
+<li>URI例子：<code>file:///tmp/export.csv</code></li>
+<li>额外的库：none<br>注意：使用本地文件系统的时候，如果指定了绝对路径<code>(/tmp/export.csv)</code>，可以忽略<code>scheme</code>，但是仅在Unix系统上有效。</li>
+</ul>
+<h3 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h3><p>feeds存储在FTP服务器上</p>
+<ul>
+<li>URI shceme:<code>ftp</code></li>
+<li>Example URL:<code>ftp://user:pass@ftp.example.com/path/to/export.csv</code></li>
+<li>额外的库：none</li>
+</ul>
+<h3 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h3><p>feeds存储在Amazon S3上。</p>
+<ul>
+<li>URI scheme:<code>s3</code></li>
+<li>Example URIs:<ul>
+<li><code>s3://mybucket/path/to/export.csv</code></li>
+<li><code>s3://aws_key:aws_secret@mybucket/path/to/export.csv</code></li>
+</ul>
+</li>
+<li>需要额外的库：<code>botocore</code>或<code>boto</code></li>
+</ul>
+<p>AWS证书可以在URI中以<code>user/password</code>传输，或者可以通过以下设置传输：</p>
+<ul>
+<li>AWS_ACCESS_KEY_ID</li>
+<li>AWS_SECRET_ACCESS_KEY</li>
+</ul>
+<h3 id="标准输出"><a href="#标准输出" class="headerlink" title="标准输出"></a>标准输出</h3><p>feeds被写进Scrapy进程的标准输出流中。</p>
+<ul>
+<li>URI scheme:<code>stdout</code></li>
+<li>Example URI:<code>stdout:</code></li>
+<li>需要额外的库：none</li>
+</ul>
+<h3 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h3><p>feed导出配置项：</p>
+<ul>
+<li><code>FEED_URI</code>(强制的)</li>
+<li><code>FEED_FORMAT</code></li>
+<li><code>FEED_STORAGES</code></li>
+<li><code>FEED_EXPORTERS</code></li>
+<li><code>FEED_STORE_EMPTY</code></li>
+<li><code>FEED_EXPORT_ENCODING</code></li>
+<li><code>FEED_EXPORT_FIELDS</code></li>
+<li><code>FEED_EXPORT_INDENT</code></li>
+</ul>
+<h4 id="FEED-URI"><a href="#FEED-URI" class="headerlink" title="FEED_URI"></a>FEED_URI</h4><p>默认：<code>None</code><br>导出feed的URI，关于URI schemes的资料查看<a href="">Storage backends</a><br>这个设置对于导出feed是必须的。</p>
+<h4 id="FEED-FORMAT"><a href="#FEED-FORMAT" class="headerlink" title="FEED_FORMAT"></a>FEED_FORMAT</h4><p>序列化feed用的格式，查看[Serialization formats]</p>
+<h4 id="FEED-EXPORT-ENCODING"><a href="#FEED-EXPORT-ENCODING" class="headerlink" title="FEED_EXPORT_ENCODING"></a>FEED_EXPORT_ENCODING</h4><p>Default:<code>None</code><br>被用于feed的编码</p>
+<p>如果没有设置或设置为None，将使用UTF-8作为除了JSON格式输出的编码，JSON使用安全数字编码(\uXXXX序列)是有历史原因的。<br>如果你愿意，使用<code>utf-8</code>作为JSON编码格式也是可以的。</p>
+<h4 id="FEED-EXPORT-FILEDS"><a href="#FEED-EXPORT-FILEDS" class="headerlink" title="FEED_EXPORT_FILEDS"></a>FEED_EXPORT_FILEDS</h4><p>Default:<code>None</code></p>
+<p>被导出字段列表选项，例如:<br><code>FEED_EXPORT_FIELDS=[&quot;foo&quot;,&quot;bar&quot;,&quot;baz&quot;]</code></p>
+<p>使用<code>FEED_EXPORT_FIELDS</code>选项来定义导出的字段和顺序。</p>
+<p>当<code>FEED_EXPORT_FIELDS</code>是空的或None时，Scrapy使用在dicts中定义的字段或Item子类。</p>
+<p>如果导出需要一个固定字段的集合(如：CSV)，但<code>FEED_EXPORT_FIELDS</code>是空或None时，Scrapy将通过导出数据推导字段名，目前使用第一个item的字段名。</p>
+<h4 id="FEED-EXPORT-INDENT"><a href="#FEED-EXPORT-INDENT" class="headerlink" title="FEED_EXPORT_INDENT"></a>FEED_EXPORT_INDENT</h4><p>Default:<code>0</code><br>输出文件不同层级的缩进空格数量。如果<code>FEED_EXPORT_INDENT</code>是一个非负整数，然后数组元素和对象成员将按照设定的缩进进行展示。缩进级别为0或负数，将会输出每个item到新的行。<br>当前仅仅<code>JsonItemExporter</code>和<code>XmlItenExporter</code>可用。例如当你导出<code>.json</code>或<code>.xml</code>格式时。</p>
+<h4 id="FEED-STORE-EMPTY"><a href="#FEED-STORE-EMPTY" class="headerlink" title="FEED_STORE_EMPTY"></a>FEED_STORE_EMPTY</h4><p>Default:<code>False</code><br>是否允许导出空的feeds(如：没有items的feeds)</p>
+<h4 id="FEED-STORAGES"><a href="#FEED-STORAGES" class="headerlink" title="FEED_STORAGES"></a>FEED_STORAGES</h4><p>Default:<code>{}</code></p>
+<p>项目提供的的额外feed存储后端支持。键为URI schemes，值为存储类的路径。</p>
+<h5 id="FEED-STORAGES-BASE"><a href="#FEED-STORAGES-BASE" class="headerlink" title="FEED_STORAGES_BASE"></a>FEED_STORAGES_BASE</h5><p>Default:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">''</span>:<span class="string">'scrapy.extensions.feedexport.FileFeedStorage'</span>,</span><br><span class="line">    <span class="string">'file'</span>: <span class="string">'scrapy.extensions.feedexport.FileFeedStorage'</span>,</span><br><span class="line">    <span class="string">'stdout'</span>: <span class="string">'scrapy.extensions.feedexport.StdoutFeedStorage'</span>,</span><br><span class="line">    <span class="string">'s3'</span>: <span class="string">'scrapy.extensions.feedexport.S3FeedStorage'</span>,</span><br><span class="line">    <span class="string">'ftp'</span>: <span class="string">'scrapy.extensions.feedexport.FTPFeedStorage'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Scrapy内置的一个包含feed后端存储的字典。你可以在FEED_STORAGES中配置值为None来禁用一个选项。例如：禁用内置的FTP后端存储，不是替换，把下面的代码放入<code>settings.py</code>中：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FEED_STORAGES=&#123;</span><br><span class="line">    <span class="string">'ftp'</span>:<span class="keyword">None</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="FEED-EXPORTERS"><a href="#FEED-EXPORTERS" class="headerlink" title="FEED_EXPORTERS"></a>FEED_EXPORTERS</h4><p>Default:{}<br>项目提供的额外exporters字典。键为序列化的格式，值为Item exporter类的路径。</p>
+<h5 id="FEED-EXPORTERS-BASE"><a href="#FEED-EXPORTERS-BASE" class="headerlink" title="FEED_EXPORTERS_BASE"></a>FEED_EXPORTERS_BASE</h5><p>Default:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">'json'</span>: <span class="string">'scrapy.exporters.JsonItemExporter'</span>,</span><br><span class="line">    <span class="string">'jsonlines'</span>: <span class="string">'scrapy.exporters.JsonLinesItemExporter'</span>,</span><br><span class="line">    <span class="string">'jl'</span>: <span class="string">'scrapy.exporters.JsonLinesItemExporter'</span>,</span><br><span class="line">    <span class="string">'csv'</span>: <span class="string">'scrapy.exporters.CsvItemExporter'</span>,</span><br><span class="line">    <span class="string">'xml'</span>: <span class="string">'scrapy.exporters.XmlItemExporter'</span>,</span><br><span class="line">    <span class="string">'marshal'</span>: <span class="string">'scrapy.exporters.MarshalItemExporter'</span>,</span><br><span class="line">    <span class="string">'pickle'</span>: <span class="string">'scrapy.exporters.PickleItemExporter'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Scrapy提供的内置feed exporters字典。你可以在FEED_EXPORTERS中禁止某些exporters。例如：禁止内置的CSV exporter(而不是替换)，把下面的代码放入<code>settings.py</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FEED_EXPORTERS=&#123;</span><br><span class="line">    &apos;csv&apos;:None,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><span id="item_exporters"></span></p>
+<h1 id="Item-Exporters"><a href="#Item-Exporters" class="headerlink" title="Item Exporters"></a>Item Exporters</h1><p>经常需要把爬取到的数据导出，以便其他应用使用，毕竟这是爬虫的目的。</p>
+<p>Scrapy提供了一些不同导出格式(XML,CSV or JSON)的Item Exporters。</p>
+<h2 id="使用Item-Exporters"><a href="#使用Item-Exporters" class="headerlink" title="使用Item Exporters"></a>使用Item Exporters</h2><p>如果你很忙，只是想用Item Exporter导出爬取到的数据，那么请看<a href="#feed_export"><code>Feed export</code></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zong An
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://anzong.github.io/2017/12/03/后端开发/Python/scrapy/" title="Scrapy">https://anzong.github.io/2017/12/03/后端开发/Python/scrapy/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/16/后端开发/Python/pycharm/" rel="next" title="pycharm">
+                <i class="fa fa-chevron-left"></i> pycharm
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/16/后端开发/Python/Django REST FrameWork/" rel="prev" title="Django REST FrameWork">
+                Django REST FrameWork <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  <div id="comments">
+    
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        app_id: 'aBY0HcaMYA1vf9YYtUwjrbtB-gzGzoHsz',
+        app_key: 'halRa7RkI712lYpOf1C7CNSq',
+        placeholder: '欢迎交流讨论~',
+        recordIP: true,
+        // 设置Bilibili表情包地址
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        // 表情title和图片映射
+        emojiMaps: {
+          "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+          "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+          "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+          "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+          "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+          "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+          "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+          "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+          "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+          "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+          "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+          "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+          "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+          "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+          "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+          "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+          "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+          "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+          "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+          "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+          "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+          // ... 更多表情
+        }
+    });
+  </script>
+
+
+  </div>
+
+          </div>
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Zong An" />
+            
+              <p class="site-author-name" itemprop="name">Zong An</p>
+              <p class="site-description motion-element" itemprop="description">
+              </p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anZong" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zongan@live.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+        </div>
+        <div class="categories">
+  <div class="title">分类</div>
+  <div class="category-all">
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端开发/">后端开发</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/游记/">游记</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">1</span></li></ul>
+  </div>
+</div>
+<div class="tags">
+  <div class="title">标签</div>
+  <div class="tag-cloud-tags">
+    <a href="/tags/Python/" style="font-size: 12px; color: #ccc">Python</a> <a href="/tags/javascript/" style="font-size: 12px; color: #ccc">javascript</a> <a href="/tags/书籍/" style="font-size: 12px; color: #ccc">书籍</a> <a href="/tags/前端框架/" style="font-size: 12px; color: #ccc">前端框架</a> <a href="/tags/工具/" style="font-size: 30px; color: #ff4d4f">工具</a> <a href="/tags/旅行/" style="font-size: 12px; color: #ccc">旅行</a> <a href="/tags/模版/" style="font-size: 12px; color: #ccc">模版</a> <a href="/tags/网络通信/" style="font-size: 21px; color: #e68d8e">网络通信</a>
+  </div>
+</div>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spiders"><span class="nav-number">1.</span> <span class="nav-text">Spiders</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用爬虫-Generic-Spider"><span class="nav-number">1.1.</span> <span class="nav-text">通用爬虫(Generic Spider)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CrawlSpider"><span class="nav-number">1.1.1.</span> <span class="nav-text">CrawlSpider</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Crawling-rules"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Crawling rules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CrawlSpider例子"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">CrawlSpider例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XMLFeedSpider"><span class="nav-number">1.1.2.</span> <span class="nav-text">XMLFeedSpider</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#XMLFeedSpider-例子："><span class="nav-number">1.1.2.1.</span> <span class="nav-text">XMLFeedSpider 例子：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSVFeedSpider"><span class="nav-number">1.1.3.</span> <span class="nav-text">CSVFeedSpider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SitemapSpider"><span class="nav-number">1.1.4.</span> <span class="nav-text">SitemapSpider</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Selectors"><span class="nav-number">2.</span> <span class="nav-text">Selectors</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Selectors"><span class="nav-number">2.1.</span> <span class="nav-text">使用Selectors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内置的Selectors参考"><span class="nav-number">2.1.1.</span> <span class="nav-text">内置的Selectors参考</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Selector-对象"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Selector 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SelectorList-objects"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">SelectorList objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于HTML-Response的Selector例子"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">基于HTML Response的Selector例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于XML-Response的Selector例子"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">基于XML Response的Selector例子</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Items"><span class="nav-number">3.</span> <span class="nav-text">Items</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明Itmes"><span class="nav-number">3.1.</span> <span class="nav-text">声明Itmes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Item-Fields"><span class="nav-number">3.2.</span> <span class="nav-text">Item Fields</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Items"><span class="nav-number">3.3.</span> <span class="nav-text">使用Items</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建items"><span class="nav-number">3.3.1.</span> <span class="nav-text">创建items</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取字段值"><span class="nav-number">3.3.2.</span> <span class="nav-text">获取字段值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置字段值"><span class="nav-number">3.3.3.</span> <span class="nav-text">设置字段值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问所有值"><span class="nav-number">3.3.4.</span> <span class="nav-text">访问所有值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他通用的任务"><span class="nav-number">3.3.5.</span> <span class="nav-text">其他通用的任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展Items"><span class="nav-number">3.4.</span> <span class="nav-text">扩展Items</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Item对象"><span class="nav-number">3.5.</span> <span class="nav-text">Item对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Field对象"><span class="nav-number">3.6.</span> <span class="nav-text">Field对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Item-Loaders"><span class="nav-number">4.</span> <span class="nav-text">Item Loaders</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Item-Loaders来构建Items"><span class="nav-number">4.1.</span> <span class="nav-text">使用Item Loaders来构建Items</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出处理"><span class="nav-number">4.2.</span> <span class="nav-text">输入输出处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明Item-Loaders"><span class="nav-number">4.3.</span> <span class="nav-text">声明Item Loaders</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义输入输出处理器"><span class="nav-number">4.4.</span> <span class="nav-text">定义输入输出处理器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feed-exports"><span class="nav-number">5.</span> <span class="nav-text">Feed exports</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化格式"><span class="nav-number">5.1.</span> <span class="nav-text">序列化格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON"><span class="nav-number">5.1.1.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-lines"><span class="nav-number">5.1.2.</span> <span class="nav-text">JSON lines</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSV"><span class="nav-number">5.1.3.</span> <span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML"><span class="nav-number">5.1.4.</span> <span class="nav-text">XML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pickle"><span class="nav-number">5.1.5.</span> <span class="nav-text">Pickle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Marshal"><span class="nav-number">5.1.6.</span> <span class="nav-text">Marshal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storages"><span class="nav-number">5.2.</span> <span class="nav-text">Storages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Storage-URI参数"><span class="nav-number">5.2.1.</span> <span class="nav-text">Storage URI参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-backends"><span class="nav-number">5.3.</span> <span class="nav-text">Storage backends</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地文件系统"><span class="nav-number">5.3.1.</span> <span class="nav-text">本地文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP"><span class="nav-number">5.3.2.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3"><span class="nav-number">5.3.3.</span> <span class="nav-text">S3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出"><span class="nav-number">5.3.4.</span> <span class="nav-text">标准输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置"><span class="nav-number">5.3.5.</span> <span class="nav-text">设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-URI"><span class="nav-number">5.3.5.1.</span> <span class="nav-text">FEED_URI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-FORMAT"><span class="nav-number">5.3.5.2.</span> <span class="nav-text">FEED_FORMAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-EXPORT-ENCODING"><span class="nav-number">5.3.5.3.</span> <span class="nav-text">FEED_EXPORT_ENCODING</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-EXPORT-FILEDS"><span class="nav-number">5.3.5.4.</span> <span class="nav-text">FEED_EXPORT_FILEDS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-EXPORT-INDENT"><span class="nav-number">5.3.5.5.</span> <span class="nav-text">FEED_EXPORT_INDENT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-STORE-EMPTY"><span class="nav-number">5.3.5.6.</span> <span class="nav-text">FEED_STORE_EMPTY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-STORAGES"><span class="nav-number">5.3.5.7.</span> <span class="nav-text">FEED_STORAGES</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FEED-STORAGES-BASE"><span class="nav-number">5.3.5.7.1.</span> <span class="nav-text">FEED_STORAGES_BASE</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FEED-EXPORTERS"><span class="nav-number">5.3.5.8.</span> <span class="nav-text">FEED_EXPORTERS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FEED-EXPORTERS-BASE"><span class="nav-number">5.3.5.8.1.</span> <span class="nav-text">FEED_EXPORTERS_BASE</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Item-Exporters"><span class="nav-number">6.</span> <span class="nav-text">Item Exporters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Item-Exporters"><span class="nav-number">6.1.</span> <span class="nav-text">使用Item Exporters</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+          <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zong An</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数&#58;</span>
+    
+    <span title="站点总字数">41.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">千里之行，始于足下</div>
+
+
+          
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+</body>
+</html>
