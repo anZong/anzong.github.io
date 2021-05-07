@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="L2scULXcrV-dpNTExouLzY5ZxJMduUhkMwEesmowcyU" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="模版," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="宗安的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、起航1、API1234567891011swig.init(&amp;#123;    allowErrors: false,    autoescape: true,    cache: true,    encoding: &amp;apos;utf8&amp;apos;,    filters: &amp;#123;&amp;#125;,    root: &amp;apos;/&amp;apos;,    tags: &amp;#123;&amp;#125">
+<meta name="keywords" content="模版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swig语法">
+<meta property="og:url" content="https://anzong.github.io/2017/10/17/前端开发/Swig/index.html">
+<meta property="og:site_name" content="宗安的博客">
+<meta property="og:description" content="一、起航1、API1234567891011swig.init(&amp;#123;    allowErrors: false,    autoescape: true,    cache: true,    encoding: &amp;apos;utf8&amp;apos;,    filters: &amp;#123;&amp;#125;,    root: &amp;apos;/&amp;apos;,    tags: &amp;#123;&amp;#125">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-06T13:21:01.277Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="swig语法">
+<meta name="twitter:description" content="一、起航1、API1234567891011swig.init(&amp;#123;    allowErrors: false,    autoescape: true,    cache: true,    encoding: &amp;apos;utf8&amp;apos;,    filters: &amp;#123;&amp;#125;,    root: &amp;apos;/&amp;apos;,    tags: &amp;#123;&amp;#125">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://anzong.github.io/2017/10/17/前端开发/Swig/"/>
+
+
+
+
+
+  <title>swig语法 | 宗安的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">宗安的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">千里之行，始于足下</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anzong.github.io/2017/10/17/前端开发/Swig/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zong An">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="宗安的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">swig语法</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-17T16:23:00+08:00">
+                2017-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-heartbeat"></i>页面访问量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、起航"><a href="#一、起航" class="headerlink" title="一、起航"></a>一、起航</h1><h2 id="1、API"><a href="#1、API" class="headerlink" title="1、API"></a>1、API</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">swig.init(&#123;</span><br><span class="line">    allowErrors: false,</span><br><span class="line">    autoescape: true,</span><br><span class="line">    cache: true,</span><br><span class="line">    encoding: &apos;utf8&apos;,</span><br><span class="line">    filters: &#123;&#125;,</span><br><span class="line">    root: &apos;/&apos;,</span><br><span class="line">    tags: &#123;&#125;,</span><br><span class="line">    extensions: &#123;&#125;,</span><br><span class="line">    tzOffset: 0</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="options"><a href="#options" class="headerlink" title="options:"></a><strong>options:</strong></h3><ul>
+<li>allowErrors: 默认值为 false。将所有模板解析和编译错误直接输出到模板。如果为 true，则将引发错误，抛出到 Node.js 进程中，可能会使您的应用程序崩溃。 </li>
+<li>autoescape: 默认true，强烈建议保持。字符转换表请参阅转义过滤器。<br>  true: HTML安全转义<br>  false: 不转义，除非使用转义过滤器或者转义标签<br>  ‘js’: js安全转义</li>
+<li>cache: 更改为 false 将重新编译每个请求的模板的文件。正式环境建议保持true。</li>
+<li>encoding: 模板文件编码</li>
+<li>root: 需要搜索模板的目录。如果模板传递给 swig.compileFile 绝对路径(以/开头)，Swig不会在模板root中搜索。如果传递一个数组，使用第一个匹配成功的数组项。</li>
+<li>tzOffset: 设置默认时区偏移量。此设置会使转换日期过滤器会自动的修正相应时区偏移量。</li>
+<li>filters:自定义过滤器或者重写默认过滤器，参见自定义过滤器指南。<br>tags: 自定义标签或者重写默认标签，参见自定义标签指南。<br>extensions: 添加第三方库，可以在编译模板时使用，参见参见自定义标签指南。</li>
+</ul>
+<h2 id="2、node-js"><a href="#2、node-js" class="headerlink" title="2、node.js"></a>2、node.js</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var tpl = swig.compileFile(&quot;path/to/template/file.html&quot;);</span><br><span class="line">var renderedHtml = tpl.render(&#123; vars: &apos;to be inserted in template&apos; &#125;);</span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">var tpl = swig.compile(&quot;Template string here&quot;);</span><br><span class="line">var renderedHtml = tpl(&#123; vars: &apos;to be inserted in template&apos; &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="3、结合Express"><a href="#3、结合Express" class="headerlink" title="3、结合Express"></a>3、结合Express</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm install express</span><br><span class="line">npm install consolidate</span><br><span class="line"></span><br><span class="line">然后</span><br><span class="line"></span><br><span class="line">app.engine(&apos;.html&apos;,cons.swig);</span><br><span class="line">app.set(&apos;view engine&apos;,html);</span><br></pre></td></tr></table></figure>
+<h2 id="4、浏览器"><a href="#4、浏览器" class="headerlink" title="4、浏览器"></a>4、浏览器</h2><p>Swig浏览器版本的api基本与nodejs版相同，不同点如下：</p>
+<ul>
+<li>不能使用swig.compileFile，浏览器没有文件系统    </li>
+<li>你必须提前使用swig.compile编译好模板    </li>
+<li>按顺序使用extends, import, and include，同时在swig.compile里使用参数templateKey来查找模板  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var template = swig.compile(&apos;&lt;p&gt;&#123;% block content %&#125;&#123;% endblock %&#125;&lt;/p&gt;&apos;, &#123; filename: &apos;main&apos; &#125;);</span><br><span class="line">var mypage = swig.compile(&apos;&#123;% extends &quot;main&quot; %&#125;&#123;% block content %&#125;Oh hey there!&#123;% endblock %&#125;&apos;, &#123; filename: &apos;mypage&apos; &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h1 id="二、基础"><a href="#二、基础" class="headerlink" title="二、基础"></a>二、基础</h1><h2 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;foo.bar&#125;&#125;或&#123;&#123;foo[&apos;bar&apos;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果变量未定义，输出空字符串<br>变量可以通过过滤器来修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; name|title &#125;&#125; was born on &#123;&#123; birthday|date(&apos;F jS, Y&apos;) &#125;&#125;</span><br><span class="line">// Jane was born on July 6th, 1985</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、逻辑标签"><a href="#2、逻辑标签" class="headerlink" title="2、逻辑标签"></a>2、逻辑标签</h2><h2 id="3、注释"><a href="#3、注释" class="headerlink" title="3、注释"></a>3、注释</h2><h2 id="4、空白"><a href="#4、空白" class="headerlink" title="4、空白"></a>4、空白</h2><p>模板里的空白在最终输出时默认保留，如果需要去掉空白，可以在逻辑标签前后加上空白控制符’—‘：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for item in seq -%&#125;</span><br><span class="line">    &#123;&#123;item&#125;&#125;</span><br><span class="line">&#123;%- endfor%&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="三、模板继承"><a href="#三、模板继承" class="headerlink" title="三、模板继承"></a>三、模板继承</h1><p>Swig使用extends和block来实现模板继承<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--layout.html--&gt;</span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;&#123;% block title %&#125;My Site&#123;% endblock %&#125;&lt;/title&gt;</span><br><span class="line">    &#123;% block head%&#125;</span><br><span class="line">        &lt;link rel=&quot;stylesheet&quot; href=&quot;main.css&quot;&gt;</span><br><span class="line">    &#123;% endblock %&#125;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &#123;% block content%&#125;&#123;%endblock%&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!--index.html--&gt;</span><br><span class="line">&#123;%extends &apos;layout.html&apos;%&#125;</span><br><span class="line">&#123;%block title%&#125;My Page&#123;%endblock%&#125;</span><br><span class="line">&#123;%block head%&#125;</span><br><span class="line">    &#123;%parent%&#125;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;custom.css&quot;&gt;</span><br><span class="line">&#123;%endblock%&#125;</span><br><span class="line">&#123;%block content%&#125;</span><br><span class="line">    &lt;p&gt;This is just a simple page.&lt;/p&gt;</span><br><span class="line">&#123;%endblock%&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="四、变量过滤器"><a href="#四、变量过滤器" class="headerlink" title="四、变量过滤器"></a>四、变量过滤器</h1><p>用于修改变量。变量名称后用“|”字符分隔添加过滤器。也可以添加多个过滤器。</p>
+<h2 id="1、例子"><a href="#1、例子" class="headerlink" title="1、例子"></a>1、例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; name|title &#125;&#125; was born on &#123;&#123;birthday|date(&apos;F jS,Y&apos;)&#125;&#125;</span><br><span class="line">and has &#123;&#123; bikes|length|default(&quot;zero&quot;)&#125;&#125; bikes.</span><br></pre></td></tr></table></figure>
+<p>也可以使用==filter标签==来为块内容添加过滤器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% filter upper %&#125;oh hi,swig!&#123;% endfilter %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、内置过滤器"><a href="#2、内置过滤器" class="headerlink" title="2、内置过滤器"></a>2、内置过滤器</h2><ul>
+<li>add(value):使变量与value相加，数值字符串会自动转换为数值</li>
+<li>addslashes:用\转义字符串</li>
+<li>caplitalize:大写首字母</li>
+<li>data(format[,tzOffset]):转换日期为指定格式</li>
+<li>format:格式</li>
+<li>tzOffset:时区</li>
+<li>default(value):默认值</li>
+<li>escape([type]):转义字符<ul>
+<li>默认: &amp;,&lt;,&gt;,”,’</li>
+<li>js：&amp;,&lt;,&gt;,”,’,=,-,;</li>
+</ul>
+</li>
+<li>first: 返回数组第一个值</li>
+<li>join(glue):同[].join</li>
+<li>json_encode([indent]):类似JSON.stringfy,indent为缩进空格数</li>
+<li>last:返回数组最后一个值</li>
+<li>length:返回变量的length,如果是object，返回key的数量</li>
+<li>lower:同’’.toLowerCase()</li>
+<li>raw:指定输入不会被转义</li>
+<li>replace(search,replace[,flags]):同’’.replace</li>
+<li>reverse:翻转数组</li>
+<li>striptags:去除html/xml标签</li>
+<li>title:大写首字母</li>
+<li>uniq:数组去重</li>
+<li>upper:同’’.toUpperCase</li>
+<li>url_encode:同encodeURIComponent</li>
+<li>url_decode:同decodeURIComponent</li>
+</ul>
+<h2 id="3、自定义过滤器"><a href="#3、自定义过滤器" class="headerlink" title="3、自定义过滤器"></a>3、自定义过滤器</h2><p>创建一个myfilter.js然后引入到Swig的初始化函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swig.init(&#123;filters:require(&apos;myfilter&apos;)&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在myfilter.js里，每一个filter方法都是一个简单的js方法，下例是一个翻转字符串的filter:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.myfilter = function(input)&#123;</span><br><span class="line">    return input.toString().split(&apos;&apos;).reverse().join(&apos;&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.prefix = function(input,prefix)&#123;</span><br><span class="line">    return prefix.toString() + input.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; name|myfilter &#125;&#125;</span><br><span class="line">或者</span><br><span class="line">&#123;% filter myfilter %&#125;</span><br><span class="line">    I shall be filtered</span><br><span class="line">&#123;% endfilter %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>过滤器传参：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--字符串--&gt;</span><br><span class="line">&#123;&#123; name|prefix(&apos;hello &apos;) &#125;&#125;</span><br><span class="line">或者</span><br><span class="line">&#123;%filter prefix &apos;hello &apos;%&#125; yang &#123;% endfilter %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!--变量--&gt;</span><br><span class="line">&#123;% filter prefix foo %&#125;I will be prefixed with the value stored to `foo`.&#123;% endfilter %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4、标签"><a href="#4、标签" class="headerlink" title="4、标签"></a>4、标签</h2><ul>
+<li>extends: 使当前模板继承父模板，必须在文件最前面<ul>
+<li>参数file:父模板相对模板root的相对路径</li>
+</ul>
+</li>
+<li>block:定义一个块，使之可以被继承的模板重写，或者重写父模板的同名块<ul>
+<li>参数name:定义一个块，使之可以被继承的模板重写，或者重写父模板的同名块</li>
+</ul>
+</li>
+<li>parent:将父模块中同名块注入当前块中</li>
+<li>include:包含一个模板到当前位置，这个模板将使用当前上下文<ul>
+<li>参数file:包含模板相对模板root的相对路径</li>
+<li>参数ignore missing:包含模板不存在也不会报错</li>
+<li>参数with x:设置x至根上下文对象以传递给模板生成。必须是一个键值对</li>
+<li>参数only:限制模板上下文中用with x定义的参数</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>本地申明的上下文变量，默认情况下不会传递给包含的模板。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% set foo = &quot;bar&quot; %&#125;</span><br><span class="line">&#123;% include &quot;inc.html&quot; %&#125;</span><br><span class="line">&#123;% for bar in thing %&#125;</span><br><span class="line">    &#123;% include &quot;inc.html&quot; %&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>错误:inc.html无法得到foo和bar
+</code></pre><blockquote>
+<p>  如果想把本地申明的变量引入到包含的模板中，可以使用with参数来把后面的对象创建到包含模板的上下文中</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% set foo = &#123; bar: &quot;baz&quot; &#125; %&#125;</span><br><span class="line">&#123;% include &quot;inc.html&quot; with foo %&#125;</span><br><span class="line">&#123;% for bar in thing %&#125;</span><br><span class="line">    &#123;% include &quot;inc.html&quot; with bar %&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  如果当前上下文中foo和bar可用，下面的情况，只有foo会被inc.html定义</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include &quot;inc.html&quot; with foo only %&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>only 必须作为最后一个参数，放在其他位置会被忽略。
+</code></pre><ul>
+<li>raw：停止解析标记中的任何内容，所有内容将原样输出<ul>
+<li>file:父模板相对模板 root 的相对路径</li>
+</ul>
+</li>
+<li><p>for:遍历对象和数组</p>
+<ul>
+<li>x:当前循环迭代名</li>
+<li>in:语法标记</li>
+<li><p>y:可迭代对象。可以使用过滤器修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for x in y %&#125;    </span><br><span class="line">    &#123;% if loop.first %&#125;&lt;ul&gt;&#123;% endif %&#125;    </span><br><span class="line">        &lt;li&gt;&#123;&#123; loop.index &#125;&#125; - &#123;&#123; loop.key &#125;&#125;: &#123;&#123; x &#125;&#125;&lt;/li&gt;     </span><br><span class="line">    &#123;% if loop.last %&#125;&lt;/ul&gt;&#123;% endif %&#125;  </span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p> loop.index：当前循环的索引（1开始）<br>    loop.index0：当前循环的索引（0开始）<br>    loop.revindex：当前循环从结尾开始的索引（1开始）<br>    loop.revindex0：当前循环从结尾开始的索引（0开始）<br>    loop.key：如果迭代是对象，是当前循环的键，否则同 loop.index<br>    loop.first：如果是第一个值返回 true<br>    loop.last：如果是最后一个值返回 true<br>    loop.cycle：一个帮助函数，以指定的参数作为周期<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loop.cycle()     循环设置奇偶行的样式</span><br><span class="line">&#123;% for item in items %&#125;</span><br><span class="line">    &lt;li class=&quot;&#123;&#123; loop.cycle(&apos;odd&apos;, &apos;even&apos;) &#125;&#125;&quot;&gt;&#123;&#123; item &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在for标签里使用else，当people为undefined或null时执行else</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for person in people %&#125;</span><br><span class="line">    &#123;&#123; person &#125;&#125;</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    There are no people yet!</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>if：条件语句</p>
+<ul>
+<li><p>参数:接受任何有效的javasript条件语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if x %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if !x %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if not x %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x and y %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x &amp;&amp; y %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x &amp;&amp; y %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x or y %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x || y %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x || (y &amp;&amp; z) %&#125;&#123;% endif %&#125;</span><br><span class="line">&#123;% if x [operator] y %&#125;</span><br><span class="line">    Operators: ==, !=, &lt;, &lt;= , &gt;, &gt;=, ===, !==</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if x == &apos;five&apos; %&#125;</span><br><span class="line">    The operands can be also be string or number literals</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if x|length === 3 %&#125;</span><br><span class="line">    You can use filters on any operand in the statement.</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if x in y %&#125;</span><br><span class="line">    If x is a value that is present in y, this will return true.</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>else和else if</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;% if foo %&#125;</span><br><span class="line">    Some content.</span><br><span class="line">&#123;% else if &quot;foo&quot; in bar %&#125;</span><br><span class="line">    Content if the array `bar` has &quot;foo&quot; in it.</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    Fallback content.</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>autoescape：改变当前变量的自动转义行为</p>
+<ul>
+<li>on：当前内容是否转义Boolean</li>
+<li>type：转义类型，js或者html，默认html</li>
+</ul>
+</li>
+</ul>
+<p>假设<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">some_html_output = &apos;&lt;p&gt;Hello &quot;you&quot; &amp; \&apos;them\&apos;&lt;/p&gt;&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;% autoescape false %&#125;</span><br><span class="line">    &#123;&#123; some_html_output &#125;&#125;</span><br><span class="line">&#123;% endautoescape %&#125;</span><br><span class="line">&#123;% autoescape true %&#125;</span><br><span class="line">    &#123;&#123; some_html_output &#125;&#125;</span><br><span class="line">&#123;% endautoescape %&#125;</span><br><span class="line">&#123;% autoescape true &quot;js&quot; %&#125;</span><br><span class="line">    &#123;&#123; some_html_output &#125;&#125;</span><br><span class="line">&#123;% endautoescape %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Hello &quot;you&quot; &amp; &apos;them&apos;&lt;/p&gt;</span><br><span class="line"> &amp;lt;p&amp;gt;Hello &amp;quot;you&amp;quot; &amp;amp; &amp;#39;them&amp;#39; &amp;lt;/p&amp;gt;</span><br><span class="line"> \u003Cp\u003EHello \u0022you\u0022 &amp; \u0027them\u0027\u003C\u005Cp\u003E</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>set：设置一个变量,在当前上下文中复用<ul>
+<li>name:变量名</li>
+<li>=语法标记</li>
+<li>value:变量值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% set foo = [0, 1, 2, 3, 4, 5] %&#125; &#123;% for num in foo %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; num &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>macro:创建自定义可复用的代码段<ul>
+<li>参数…:用户自定义</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% macro input type name id label value error %&#125;</span><br><span class="line"> &lt;label for=&quot;&#123;&#123; name &#125;&#125;&quot;&gt;&#123;&#123; label &#125;&#125;&lt;/label&gt;</span><br><span class="line"> &lt;input type=&quot;&#123;&#123; type &#125;&#125;&quot; name=&quot;&#123;&#123; name &#125;&#125;&quot; id=&quot;&#123;&#123; id &#125;&#125;&quot; value=&quot;&#123;&#123; value &#125;&#125;&quot;&#123;% if error %&#125; class=&quot;error&quot;&#123;% endif %&#125;&gt;</span><br><span class="line">&#123;% endmacro %&#125;</span><br></pre></td></tr></table></figure>
+<p>使用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;&#123; input(&quot;text&quot;, &quot;fname&quot;, &quot;fname&quot;, &quot;First Name&quot;, fname.value, fname.errors) &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;&#123; input(&quot;text&quot;, &quot;lname&quot;, &quot;lname&quot;, &quot;Last Name&quot;, lname.value, lname.errors) &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;label for=&quot;fname&quot;&gt;First Name&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; name=&quot;fname&quot; id=&quot;fname&quot; value=&quot;Paul&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;label for=&quot;lname&quot;&gt;Last Name&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; name=&quot;lname&quot; id=&quot;lname&quot; value=&quot;&quot; class=&quot;error&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>import：允许引入另一个模板的宏进入当前上下文  <ul>
+<li>file:引入模板相对模板root的相对路径</li>
+<li>as:语法标记</li>
+<li>var:分配给宏的可访问上下文对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% import &apos;formmacros.html&apos; as form %&#125;  </span><br><span class="line">&#123;# this will run the input macro #&#125;</span><br><span class="line">&#123;&#123; form.input(&quot;text&quot;, &quot;name&quot;) &#125;&#125;</span><br><span class="line">&#123;# this, however, will NOT output anything because the macro is scoped to the &quot;form&quot;     object: #&#125;</span><br><span class="line">&#123;&#123; input(&quot;text&quot;, &quot;name&quot;) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>filter:对整个块应用过滤器<ul>
+<li>filter_name:过滤器名字</li>
+<li>…:若干传给过滤器的参数</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>  使用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% filter uppercase %&#125;</span><br><span class="line">    oh hi, &#123;&#123; name &#125;&#125;</span><br><span class="line">&#123;% endfilter %&#125;</span><br><span class="line">&#123;% filter replace &quot;.&quot; &quot;!&quot; &quot;g&quot; %&#125;</span><br><span class="line">    Hi. My name is Paul.</span><br><span class="line">&#123;% endfilter %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  输出</p>
+</blockquote>
+<pre><code>OH HI, PAUL Hi! My name is Paul!
+</code></pre><ul>
+<li>spaceless:尝试移出html标签间的空格</li>
+</ul>
+<blockquote>
+<p>使用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% spaceless %&#125;</span><br><span class="line">&#123;% for num in foo %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; loop.index &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&#123;% endspaceless %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  输出</p>
+</blockquote>
+<pre><code>&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;li&gt;3&lt;/li&gt;
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zong An
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://anzong.github.io/2017/10/17/前端开发/Swig/" title="swig语法">https://anzong.github.io/2017/10/17/前端开发/Swig/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模版/" rel="tag"># 模版</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/01/读书笔记/中国佛教发展简史略述——南怀瑾/" rel="next" title="中国佛教发展简史略述——南怀瑾">
+                <i class="fa fa-chevron-left"></i> 中国佛教发展简史略述——南怀瑾
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/18/后端开发/Python/Django框架/" rel="prev" title="Django框架">
+                Django框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  <div id="comments">
+    
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        app_id: 'aBY0HcaMYA1vf9YYtUwjrbtB-gzGzoHsz',
+        app_key: 'halRa7RkI712lYpOf1C7CNSq',
+        placeholder: '欢迎交流讨论~',
+        recordIP: true,
+        // 设置Bilibili表情包地址
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        // 表情title和图片映射
+        emojiMaps: {
+          "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+          "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+          "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+          "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+          "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+          "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+          "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+          "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+          "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+          "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+          "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+          "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+          "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+          "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+          "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+          "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+          "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+          "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+          "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+          "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+          "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+          // ... 更多表情
+        }
+    });
+  </script>
+
+
+  </div>
+
+          </div>
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Zong An" />
+            
+              <p class="site-author-name" itemprop="name">Zong An</p>
+              <p class="site-description motion-element" itemprop="description">
+              </p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anZong" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zongan@live.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+        </div>
+        <div class="categories">
+  <div class="title">分类</div>
+  <div class="category-all">
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端开发/">后端开发</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/游记/">游记</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">1</span></li></ul>
+  </div>
+</div>
+<div class="tags">
+  <div class="title">标签</div>
+  <div class="tag-cloud-tags">
+    <a href="/tags/Python/" style="font-size: 12px; color: #ccc">Python</a> <a href="/tags/javascript/" style="font-size: 12px; color: #ccc">javascript</a> <a href="/tags/书籍/" style="font-size: 12px; color: #ccc">书籍</a> <a href="/tags/前端框架/" style="font-size: 12px; color: #ccc">前端框架</a> <a href="/tags/工具/" style="font-size: 30px; color: #ff4d4f">工具</a> <a href="/tags/旅行/" style="font-size: 12px; color: #ccc">旅行</a> <a href="/tags/模版/" style="font-size: 12px; color: #ccc">模版</a> <a href="/tags/网络通信/" style="font-size: 21px; color: #e68d8e">网络通信</a>
+  </div>
+</div>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、起航"><span class="nav-number">1.</span> <span class="nav-text">一、起航</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、API"><span class="nav-number">1.1.</span> <span class="nav-text">1、API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options"><span class="nav-number">1.1.1.</span> <span class="nav-text">options:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、node-js"><span class="nav-number">1.2.</span> <span class="nav-text">2、node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、结合Express"><span class="nav-number">1.3.</span> <span class="nav-text">3、结合Express</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、浏览器"><span class="nav-number">1.4.</span> <span class="nav-text">4、浏览器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、基础"><span class="nav-number">2.</span> <span class="nav-text">二、基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、变量"><span class="nav-number">2.1.</span> <span class="nav-text">1、变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、逻辑标签"><span class="nav-number">2.2.</span> <span class="nav-text">2、逻辑标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、注释"><span class="nav-number">2.3.</span> <span class="nav-text">3、注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、空白"><span class="nav-number">2.4.</span> <span class="nav-text">4、空白</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、模板继承"><span class="nav-number">3.</span> <span class="nav-text">三、模板继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、变量过滤器"><span class="nav-number">4.</span> <span class="nav-text">四、变量过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、例子"><span class="nav-number">4.1.</span> <span class="nav-text">1、例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、内置过滤器"><span class="nav-number">4.2.</span> <span class="nav-text">2、内置过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、自定义过滤器"><span class="nav-number">4.3.</span> <span class="nav-text">3、自定义过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、标签"><span class="nav-number">4.4.</span> <span class="nav-text">4、标签</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+          <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zong An</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数&#58;</span>
+    
+    <span title="站点总字数"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">千里之行，始于足下</div>
+
+
+          
+<div class="busuanzi-count">
+  <script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+</body>
+</html>
